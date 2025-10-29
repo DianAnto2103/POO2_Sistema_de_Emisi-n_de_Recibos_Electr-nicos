@@ -40,6 +40,8 @@ public class MenuController {
         ListarClientesView vistaClientes = new ListarClientesView();
         JFrame ventanaFlotante2 = new JFrame("Clientes");
         
+        ClientesController clientesController = new ClientesController(vistaClientes, ventanaFlotante2);
+        
         ventanaFlotante2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventanaFlotante2.getContentPane().add(vistaClientes);
         ventanaFlotante2.pack();
