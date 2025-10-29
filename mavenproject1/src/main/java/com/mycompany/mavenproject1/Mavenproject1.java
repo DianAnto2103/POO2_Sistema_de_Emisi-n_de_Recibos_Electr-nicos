@@ -4,6 +4,9 @@
 
 package com.mycompany.mavenproject1;
 
+import controlador.HomeController;
+
+
 /**
  *
  * @author diana
@@ -11,6 +14,6 @@ package com.mycompany.mavenproject1;
 public class Mavenproject1 {
 
     public static void main(String[] args) {
-        System.out.println("Hello Woarld!");
+        HomeController homeController = new HomeController();
     }
 }
