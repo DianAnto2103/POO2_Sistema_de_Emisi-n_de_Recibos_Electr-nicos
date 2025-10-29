@@ -14,12 +14,16 @@ import vista.BuscarClienteView;
 import vista.ListarClientesView;
 import javax.swing.*;
 
+//la clase más importante, es para la coordinacion entre los demás controllers
+
 public final class ClientesCoordinadorController implements NavegacionCliente {
-    private final JFrame frameClientes;
+    private final JFrame frameClientes; //es para el constructor, para cuando se coloque en MenuController se pueda colocar el frame momentaneo.
+    //se traen los controllers
     private ListaClientesController controllerListaClientes;
     private AgregarClienteController controllerAgregarClientes;
     private BuscarClienteController controllerBuscarClientes;
     
+    //el constructor que tiene como parametro un JFrame, como se ha explicado anteriormente, es para traer el fraem momentaneo. 
     public ClientesCoordinadorController(JFrame frameClientes){
         this.frameClientes = frameClientes;
         inicializarControllers();
@@ -27,19 +31,21 @@ public final class ClientesCoordinadorController implements NavegacionCliente {
     }
     
     
+    //se inicializa los controllers.
     public void inicializarControllers(){
         ListarClientesView vistaListaClientes = new ListarClientesView();
         AgregarClienteView vistaAgregarClientes = new AgregarClienteView();
         BuscarClienteView vistaBuscarClientes = new BuscarClienteView();
         
-        this.controllerListaClientes = new ListaClientesController(vistaListaClientes, this);
-        this.controllerAgregarClientes= new AgregarClienteController(vistaAgregarClientes, this);
+        this.controllerListaClientes = new ListaClientesController(vistaListaClientes, this); //se pasa esta misma clase como NAVEGACIÓN, porque es el que maneja todo. 
+        this.controllerAgregarClientes= new AgregarClienteController(vistaAgregarClientes, this); //igual aqui
         this.controllerBuscarClientes = new BuscarClienteController(vistaBuscarClientes, this);
     }
     
     @Override
-    public void mostrarListaClientes(){
-        mostrarVista(controllerListaClientes.getVistaListaCliente());
+    public void mostrarListaClientes(){ 
+        mostrarVista(controllerListaClientes.getVistaListaCliente()); //utilzia el metodo mostrarVista que esta al final. 
+        //Le pasa el getVista que anteriormente habiamos creado en cada clase controller. 
     }
     @Override
     public void mostrarAgregarCliente(){
@@ -51,11 +57,12 @@ public final class ClientesCoordinadorController implements NavegacionCliente {
     }
     
     @Override
-    public void cerrarVentana(){
+    public void cerrarVentana(){ //este es para los botones: "Salir"
         frameClientes.dispose();
     }
     
-    private void mostrarVista(JPanel vista) {
+    private void mostrarVista(JPanel vista) { /*aqui esta la el metodo mostrarVista, este es el que se encarga de borrar todo el contenido 
+        anterior, y se encarga de agregar las vistas dependiendo de lo que vista se esta requieriendo.*/
         frameClientes.getContentPane().removeAll();
         frameClientes.getContentPane().add(vista);
         frameClientes.pack();

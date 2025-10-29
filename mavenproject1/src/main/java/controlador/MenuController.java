@@ -14,6 +14,8 @@ import vista.ReciboView;
  *
  * @author diana
  */
+
+//este es el controller para la vista principal. 
 public class MenuController {
     private MenuPrincipalView vistaMenu;
     
@@ -39,7 +41,8 @@ public class MenuController {
     public void abrirVentanaClientes(){
         JFrame ventanaFlotante2 = new JFrame("Clientes");
         
-        ClientesCoordinadorController coordinator = new ClientesCoordinadorController (ventanaFlotante2);
+        ClientesCoordinadorController coordinator = new ClientesCoordinadorController (ventanaFlotante2); /*se pasa el coordinador
+        asi lo de aqui lo toma en cuenta. Solo se comunica con el coordinador.*/ 
         
         ventanaFlotante2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventanaFlotante2.pack();
@@ -51,7 +54,7 @@ public class MenuController {
     
     public void abrirVentanaReportes(){
         ModuloReportesView vistaReportes = new ModuloReportesView();
-        JFrame ventanaFlotante3 = new JFrame("Clientes");
+        JFrame ventanaFlotante3 = new JFrame("Reportes");
         
         ventanaFlotante3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventanaFlotante3.getContentPane().add(vistaReportes);
