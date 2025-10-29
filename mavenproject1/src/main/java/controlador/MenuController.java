@@ -37,13 +37,11 @@ public class MenuController {
     }
     
     public void abrirVentanaClientes(){
-        ListarClientesView vistaClientes = new ListarClientesView();
         JFrame ventanaFlotante2 = new JFrame("Clientes");
         
-        ClientesController clientesController = new ClientesController(vistaClientes, ventanaFlotante2);
+        ClientesCoordinadorController coordinator = new ClientesCoordinadorController (ventanaFlotante2);
         
         ventanaFlotante2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        ventanaFlotante2.getContentPane().add(vistaClientes);
         ventanaFlotante2.pack();
         ventanaFlotante2.setLocationRelativeTo(null);
         ventanaFlotante2.setResizable(false);
