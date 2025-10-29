@@ -6,6 +6,7 @@ package controlador;
 
 import javax.swing.*;
 import vista.AgregarClienteView;
+import vista.BuscarClienteView;
 import vista.ListarClientesView;
 
 /**
@@ -13,18 +14,21 @@ import vista.ListarClientesView;
  * @author diana
  */
 public class ClientesController {
-    ListarClientesView vistaCliente;
+    ListarClientesView vistaListaCliente;
     private JFrame frameClientes;
+    private AgregarClienteView vistaAgregarCliente;
+    private BuscarClienteView vistaBuscarCliente;
     
     public ClientesController(ListarClientesView vistaCliente, JFrame frameClientes){
-        this.vistaCliente = vistaCliente;
+        this.vistaListaCliente = vistaCliente;
         this.frameClientes = frameClientes;
-        this.vistaCliente.getBotonAgregarCliente().addActionListener(e -> abrirVentanaAgregar());
+        this.vistaListaCliente.getBotonAgregarCliente().addActionListener(e -> abrirVentanaAgregar());
+        this.vistaListaCliente.getBotonBuscarCliente().addActionListener(e -> abrirVentanaBuscar());
     }
     
     public void abrirVentanaAgregar()
     {
-        AgregarClienteView vistaAgregarCliente = new AgregarClienteView();
+        vistaAgregarCliente = new AgregarClienteView();
         
         frameClientes.getContentPane().removeAll();
         frameClientes.getContentPane().add(vistaAgregarCliente);
@@ -34,7 +38,34 @@ public class ClientesController {
         frameClientes.revalidate();
         frameClientes.repaint();
         
+        vistaAgregarCliente.getBotonVolver().addActionListener(e -> volverALista());
+        vistaAgregarCliente.getBotonSalir().addActionListener(e -> frameClientes.dispose());
+    }
+    
+    public void abrirVentanaBuscar(){
+        vistaBuscarCliente = new BuscarClienteView();
         
+        frameClientes.getContentPane().removeAll();
+        frameClientes.getContentPane().add(vistaBuscarCliente);
+        frameClientes.pack();
+        frameClientes.setLocationRelativeTo(null);
+        frameClientes.setResizable(false);
+        frameClientes.revalidate();
+        frameClientes.repaint();
+        
+        vistaBuscarCliente.getBotonVolver().addActionListener(e -> volverALista());
+        vistaBuscarCliente.getBotonSalir().addActionListener(e -> frameClientes.dispose());
+        
+    }
+    
+    public void volverALista(){
+        frameClientes.getContentPane().removeAll();
+        frameClientes.getContentPane().add(vistaListaCliente);
+        frameClientes.pack();
+        frameClientes.setLocationRelativeTo(null);
+        frameClientes.setResizable(false);
+        frameClientes.revalidate();
+        frameClientes.repaint();
     }
     
 }
