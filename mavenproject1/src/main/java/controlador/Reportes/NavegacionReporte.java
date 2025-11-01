@@ -2,15 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package controlador.Clientes;
+package controlador.Reportes;
 
 /**
  *
  * @author diana
  */
-public interface NavegacionCliente {
-    public void mostrarListaClientes();
-    public void mostrarAgregarCliente();
-    public void mostrarBuscarCliente();
+public interface NavegacionReporte {
+    public void mostrarListaDeudores();
+    public void mostrarEstadoDeCuenta();
+    public void mostrarModuloReportes();
     public void cerrarVentana();
 }

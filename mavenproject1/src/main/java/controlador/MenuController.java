@@ -5,8 +5,8 @@
 package controlador;
 
 import controlador.Clientes.ClientesCoordinadorController;
+import controlador.Reportes.ReportesCoordinadorController;
 import javax.swing.*;
-import vista.ListarClientesView;
 import vista.MenuPrincipalView;
 import vista.ModuloReportesView;
 import vista.ReciboView;
@@ -28,13 +28,12 @@ public class MenuController {
     }
     
     public void abrirVentanaRecibo(){
-        ReciboView vistaRecibo = new ReciboView();
         JFrame ventanaFlotante1 = new JFrame("Registro de pagos");
         
-        RegistroController registroController = new RegistroController(ventanaFlotante1, vistaRecibo);
+        RegistroController registroController = new RegistroController(ventanaFlotante1);
         
         ventanaFlotante1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        ventanaFlotante1.getContentPane().add(vistaRecibo);
+        ventanaFlotante1.getContentPane().add(registroController.getVistaRegistro());
         ventanaFlotante1.pack();
         ventanaFlotante1.setLocationRelativeTo(null);
         ventanaFlotante1.setResizable(false);
@@ -44,7 +43,7 @@ public class MenuController {
     public void abrirVentanaClientes(){
         JFrame ventanaFlotante2 = new JFrame("Clientes");
         
-        ClientesCoordinadorController coordinator = new ClientesCoordinadorController (ventanaFlotante2); /*se pasa el coordinador
+        ClientesCoordinadorController coordinadorCliente = new ClientesCoordinadorController (ventanaFlotante2); /*se pasa el coordinador
         asi lo de aqui lo toma en cuenta. Solo se comunica con el coordinador.*/ 
         
         ventanaFlotante2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -59,8 +58,9 @@ public class MenuController {
         ModuloReportesView vistaReportes = new ModuloReportesView();
         JFrame ventanaFlotante3 = new JFrame("Reportes");
         
+        ReportesCoordinadorController coordinadorReporte = new ReportesCoordinadorController(ventanaFlotante3);
+        
         ventanaFlotante3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        ventanaFlotante3.getContentPane().add(vistaReportes);
         ventanaFlotante3.pack();
         ventanaFlotante3.setLocationRelativeTo(null);
         ventanaFlotante3.setResizable(false);

@@ -12,7 +12,7 @@ import vista.ListarClientesView;
  */
 public final class ListaClientesController {
     //se trae la vista
-    ListarClientesView vistaListaCliente;
+    private ListarClientesView vistaListaCliente;
     //se trae la interfaz navegación que tiene las funciones principales para "navegar" entre pantallas. 
     private final NavegacionCliente navegacion;
     

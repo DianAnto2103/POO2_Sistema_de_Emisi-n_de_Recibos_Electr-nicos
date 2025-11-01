@@ -9,8 +9,6 @@ package controlador.Clientes;
  * @author diana
  */
 
-import controlador.Clientes.BuscarClienteController;
-import controlador.Clientes.AgregarClienteController;
 import vista.AgregarClienteView;
 import vista.BuscarClienteView;
 import vista.ListarClientesView;

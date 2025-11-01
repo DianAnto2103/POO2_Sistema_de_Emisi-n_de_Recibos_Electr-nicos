@@ -15,13 +15,12 @@ public final class RegistroController {
     private final JFrame frameReportes;
     private final ReciboView vistaRecibo;
     
-    public RegistroController(JFrame frameReportes,ReciboView vistaRecibo){
+    public RegistroController(JFrame frameReportes){
         this.frameReportes = frameReportes;
-        this.vistaRecibo = vistaRecibo;
+        this.vistaRecibo = new ReciboView();
         configurarEventos();
         
     }
-    
     
     public void configurarEventos(){
         vistaRecibo.getBotonSalir().addActionListener(e -> {
@@ -33,4 +32,8 @@ public final class RegistroController {
         frameReportes.dispose();
     }
     
+    
+    public ReciboView getVistaRegistro(){
+        return vistaRecibo;
+    }
 }

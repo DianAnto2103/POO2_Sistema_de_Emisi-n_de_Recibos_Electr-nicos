@@ -4,10 +4,29 @@
  */
 package controlador.Reportes;
 
+import vista.ModuloReportesView;
+
 /**
  *
  * @author diana
  */
-public class ModuloReportesController {
+public final class ModuloReportesController {
+    private final ModuloReportesView vistaModuloReporte;
+    private final NavegacionReporte navegacion;
+
+    public ModuloReportesController(ModuloReportesView vistaModuloReporte, NavegacionReporte navegacion) {
+        this.vistaModuloReporte = vistaModuloReporte;
+        this.navegacion = navegacion;
+        configurarEventos();
+    }
     
+    public void configurarEventos(){
+        vistaModuloReporte.getBotonDeudores().addActionListener(e -> navegacion.mostrarListaDeudores());
+        vistaModuloReporte.getBotonEstado().addActionListener(e -> navegacion.mostrarEstadoDeCuenta());
+        
+    }
+    
+    public ModuloReportesView getVistaModuloReporte() {
+        return vistaModuloReporte;
+    }  
 }
