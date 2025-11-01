@@ -4,6 +4,7 @@
  */
 package controlador;
 
+import controlador.Clientes.ClientesCoordinadorController;
 import javax.swing.*;
 import vista.ListarClientesView;
 import vista.MenuPrincipalView;
@@ -29,6 +30,8 @@ public class MenuController {
     public void abrirVentanaRecibo(){
         ReciboView vistaRecibo = new ReciboView();
         JFrame ventanaFlotante1 = new JFrame("Registro de pagos");
+        
+        RegistroController registroController = new RegistroController(ventanaFlotante1, vistaRecibo);
         
         ventanaFlotante1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventanaFlotante1.getContentPane().add(vistaRecibo);

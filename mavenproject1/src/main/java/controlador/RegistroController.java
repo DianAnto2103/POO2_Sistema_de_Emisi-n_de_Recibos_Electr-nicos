@@ -4,10 +4,33 @@
  */
 package controlador;
 
+import javax.swing.*;
+import vista.ReciboView;
+
 /**
  *
  * @author diana
  */
-public class RegistroController {
+public final class RegistroController {
+    private final JFrame frameReportes;
+    private final ReciboView vistaRecibo;
+    
+    public RegistroController(JFrame frameReportes,ReciboView vistaRecibo){
+        this.frameReportes = frameReportes;
+        this.vistaRecibo = vistaRecibo;
+        configurarEventos();
+        
+    }
+    
+    
+    public void configurarEventos(){
+        vistaRecibo.getBotonSalir().addActionListener(e -> {
+            cerrarVentana();
+        });
+    }
+    
+    private void cerrarVentana(){
+        frameReportes.dispose();
+    }
     
 }
