@@ -4,12 +4,19 @@
  */
 package model.Singleton;
 
+import java.sql.Connection;
+
 /**
  *
  * @author diana
  */
 public class Singleton {
-    Singleton instance;
+    private static Singleton instance;
+    private static Connection conexion;
+    private static String URL = "jdbc:sqlserver://localhost:1433;databaseName=OasisDB";
+    private static String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static String USUARIO = "developer";
+    private static String PASSWORD = "oasis123";
     
     public Singleton getInstance() {
         return instance;
