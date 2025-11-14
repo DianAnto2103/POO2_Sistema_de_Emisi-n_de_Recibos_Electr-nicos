@@ -8,8 +8,6 @@ import controlador.Clientes.ClientesCoordinadorController;
 import controlador.Reportes.ReportesCoordinadorController;
 import javax.swing.*;
 import vista.MenuPrincipalView;
-import vista.ModuloReportesView;
-import vista.ReciboView;
 
 /**
  *
@@ -55,7 +53,6 @@ public class MenuController {
     
     
     public void abrirVentanaReportes(){
-        ModuloReportesView vistaReportes = new ModuloReportesView();
         JFrame ventanaFlotante3 = new JFrame("Reportes");
         
         ReportesCoordinadorController coordinadorReporte = new ReportesCoordinadorController(ventanaFlotante3);

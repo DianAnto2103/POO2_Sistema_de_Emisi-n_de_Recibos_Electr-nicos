@@ -10,7 +10,7 @@ package controlador.Clientes;
  */
 
 import vista.AgregarClienteView;
-import vista.BuscarClienteView;
+import vista.ModificarClienteView;
 import vista.ListarClientesView;
 import javax.swing.*;
 
@@ -21,7 +21,7 @@ public final class ClientesCoordinadorController implements NavegacionCliente {
     //se traen los controllers
     private ListaClientesController controllerListaClientes;
     private AgregarClienteController controllerAgregarClientes;
-    private BuscarClienteController controllerBuscarClientes;
+    private ModificarClienteController controllerModificarClientes;
     
     //el constructor que tiene como parametro un JFrame, como se ha explicado anteriormente, es para traer el fraem momentaneo. 
     public ClientesCoordinadorController(JFrame frameClientes){
@@ -35,11 +35,11 @@ public final class ClientesCoordinadorController implements NavegacionCliente {
     public void inicializarControllers(){
         ListarClientesView vistaListaClientes = new ListarClientesView();
         AgregarClienteView vistaAgregarClientes = new AgregarClienteView();
-        BuscarClienteView vistaBuscarClientes = new BuscarClienteView();
+        ModificarClienteView vistaModificarClientes = new ModificarClienteView();
         
         this.controllerListaClientes = new ListaClientesController(vistaListaClientes, this); //se pasa esta misma clase como NAVEGACIÓN, porque es el que maneja todo. 
         this.controllerAgregarClientes= new AgregarClienteController(vistaAgregarClientes, this); //igual aqui
-        this.controllerBuscarClientes = new BuscarClienteController(vistaBuscarClientes, this);
+        this.controllerModificarClientes = new ModificarClienteController(vistaModificarClientes, this);
     }
     
     @Override
@@ -52,8 +52,8 @@ public final class ClientesCoordinadorController implements NavegacionCliente {
         mostrarVista(controllerAgregarClientes.getVistaAgregarCliente());
     }
     @Override
-    public void mostrarBuscarCliente(){
-        mostrarVista(controllerBuscarClientes.getVistaBuscarCliente());
+    public void mostrarModificarCliente(){
+        mostrarVista(controllerModificarClientes.getVistaBuscarCliente());
     }
     
     @Override

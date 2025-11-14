@@ -10,12 +10,12 @@ import javax.swing.JButton;
  *
  * @author diana
  */
-public class EstadodeCuenta extends javax.swing.JPanel {
+public class EstadodeCuentaView extends javax.swing.JPanel {
 
     /**
      * Creates new form EstadodeCuenta
      */
-    public EstadodeCuenta() {
+    public EstadodeCuentaView() {
         initComponents();
     }
 

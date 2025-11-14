@@ -25,7 +25,7 @@ public final class ListaClientesController {
     
     public void configurarEventos(){
         vistaListaCliente.getBotonAgregarCliente().addActionListener(e -> navegacion.mostrarAgregarCliente());
-        vistaListaCliente.getBotonBuscarCliente().addActionListener(e -> navegacion.mostrarBuscarCliente());
+        vistaListaCliente.getBotonBuscarCliente().addActionListener(e -> navegacion.mostrarModificarCliente());
     }
     
     public ListarClientesView getVistaListaCliente() {

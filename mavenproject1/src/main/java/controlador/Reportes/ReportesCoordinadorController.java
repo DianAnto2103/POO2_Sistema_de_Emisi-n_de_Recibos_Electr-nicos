@@ -5,8 +5,8 @@
 package controlador.Reportes;
 
 import javax.swing.*;
-import vista.EstadodeCuenta;
-import vista.ListaClientesDeudores;
+import vista.EstadodeCuentaView;
+import vista.ListaClientesDeudoresView;
 import vista.ModuloReportesView;
 
 /**
@@ -27,8 +27,8 @@ public final class ReportesCoordinadorController implements NavegacionReporte{
     
     public void inicializarControllers(){
         ModuloReportesView vistaModuloReportes = new ModuloReportesView();
-        ListaClientesDeudores vistaListaDeudores = new ListaClientesDeudores();
-        EstadodeCuenta vistaEstadodeCuenta = new EstadodeCuenta();
+        ListaClientesDeudoresView vistaListaDeudores = new ListaClientesDeudoresView();
+        EstadodeCuentaView vistaEstadodeCuenta = new EstadodeCuentaView();
         
         controllerModuloReportes = new ModuloReportesController(vistaModuloReportes, this);
         controllerListaDeudores = new ListaDeudoresController(vistaListaDeudores, this);

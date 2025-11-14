@@ -4,17 +4,17 @@
  */
 package controlador.Reportes;
 
-import vista.EstadodeCuenta;
+import vista.EstadodeCuentaView;
 
 /**
  *
  * @author diana
  */
 public final class EstadoDeCuentaController {
-    private final EstadodeCuenta vistaEstadodeCuenta;
+    private final EstadodeCuentaView vistaEstadodeCuenta;
     private final NavegacionReporte navegacion;
     
-    public EstadoDeCuentaController(EstadodeCuenta vistaEstadodeCuenta, NavegacionReporte navegacion) {
+    public EstadoDeCuentaController(EstadodeCuentaView vistaEstadodeCuenta, NavegacionReporte navegacion) {
         this.vistaEstadodeCuenta = vistaEstadodeCuenta;
         this.navegacion = navegacion;
         configurarEventos(); 
@@ -24,7 +24,7 @@ public final class EstadoDeCuentaController {
         this.vistaEstadodeCuenta.getBotonVolver().addActionListener(e -> navegacion.mostrarModuloReportes());
     }
     
-    public EstadodeCuenta getVistaEstadodeCuenta() {
+    public EstadodeCuentaView getVistaEstadodeCuenta() {
         return vistaEstadodeCuenta;
     }
     

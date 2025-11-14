@@ -11,6 +11,6 @@ package controlador.Clientes;
 public interface NavegacionCliente {
     public void mostrarListaClientes();
     public void mostrarAgregarCliente();
-    public void mostrarBuscarCliente();
+    public void mostrarModificarCliente();
     public void cerrarVentana();
 }

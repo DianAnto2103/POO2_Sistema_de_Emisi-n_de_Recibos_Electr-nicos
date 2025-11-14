@@ -4,17 +4,17 @@
  */
 package controlador.Reportes;
 
-import vista.ListaClientesDeudores;
+import vista.ListaClientesDeudoresView;
 
 /**
  *
  * @author diana
  */
 public final class ListaDeudoresController {
-    private final ListaClientesDeudores vistaListaDeudores;
+    private final ListaClientesDeudoresView vistaListaDeudores;
     private final NavegacionReporte navegacion;
     
-    public ListaDeudoresController(ListaClientesDeudores vistaListaDeudores,NavegacionReporte navegacion){
+    public ListaDeudoresController(ListaClientesDeudoresView vistaListaDeudores,NavegacionReporte navegacion){
         this.vistaListaDeudores = vistaListaDeudores;
         this.navegacion = navegacion;
         configurarEventos(); 
@@ -24,7 +24,7 @@ public final class ListaDeudoresController {
         this.vistaListaDeudores.getBotonVolver().addActionListener(e -> navegacion.mostrarModuloReportes());     
     }
     
-    public ListaClientesDeudores getVistaListaDeudores() {
+    public ListaClientesDeudoresView getVistaListaDeudores() {
         return vistaListaDeudores;
     }
     

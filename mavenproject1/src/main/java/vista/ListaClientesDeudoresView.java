@@ -10,12 +10,12 @@ import javax.swing.JButton;
  *
  * @author USER
  */
-public class ListaClientesDeudores extends javax.swing.JPanel {
+public class ListaClientesDeudoresView extends javax.swing.JPanel {
 
     /**
      * Creates new form ListaClientesDeudores
      */
-    public ListaClientesDeudores() {
+    public ListaClientesDeudoresView() {
         initComponents();
     }
 
