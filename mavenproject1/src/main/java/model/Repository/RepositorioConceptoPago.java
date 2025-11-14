@@ -12,8 +12,9 @@ import java.util.List;
  * @author diana
  */
 public interface RepositorioConceptoPago {
-    ConceptoPago buscarporID(int id);
+    ConceptoPago buscarPorID(int id);
     List<ConceptoPago> buscarTodos();
+    void guardarTodos(List<ConceptoPago> conceptos);
     void guardar(ConceptoPago concepto);
     void actualizar(ConceptoPago concepto);
     void eliminar(ConceptoPago concepto);   
