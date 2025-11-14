@@ -39,12 +39,12 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public String getRazon_social() {
+    public String getRazonSocial() {
         return razonSocial;
     }
 
-    public void setRazon_social(String razon_social) {
-        this.razonSocial = razon_social;
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
     }
 
     public double getMensualidad() {
