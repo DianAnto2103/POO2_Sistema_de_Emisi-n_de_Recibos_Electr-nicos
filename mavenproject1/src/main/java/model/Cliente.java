@@ -14,6 +14,7 @@ public class Cliente {
     private String telefono;
     private String razonSocial;
     private double mensualidad;
+    private boolean activo;
    
     public int getID() {
         return ID;
@@ -53,6 +54,14 @@ public class Cliente {
 
     public void setMensualidad(double mensualidad) {
         this.mensualidad = mensualidad;
+    }
+    
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
     
 }
