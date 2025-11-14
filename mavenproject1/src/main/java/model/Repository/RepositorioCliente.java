@@ -11,10 +11,11 @@ import model.Cliente;
  *
  * @author diana
  */
-public interface RepositorioCliente {
+public interface RepositorioCliente 
+{
     Cliente buscarPorID(int id);
     List<Cliente> buscarTodos();
-    List<Cliente> buscarPorEjemplo(Cliente ejemplo);  
+    List<Cliente> buscarPorEjemplo(Cliente cliente);  
     void guardar(Cliente cliente);
     void actualizar(Cliente cliente);
     void eliminar(Cliente cliente);
