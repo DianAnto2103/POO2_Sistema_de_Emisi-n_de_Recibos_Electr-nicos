@@ -5,6 +5,7 @@
 package model.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import model.Cliente;
 import model.Singleton.Singleton;
@@ -64,7 +65,50 @@ public class RepositorioClienteImp implements RepositorioCliente {
     @Override
     public List<Cliente> buscarTodos()
     {
-       return null;
+        
+        // Lista para almacenar todos los clientes que se van a retornar
+        List<Cliente> clientes = new ArrayList<>();
+        
+        
+        // Consulta SQL. Selecciona todos los clientes activos ordenados por ID ascendente (1,2,3,4, 5....)
+        String sql = "SELECT * FROM clientes WHERE activo = 1 ORDER BY id ASC";
+        
+        // try-with-resources: cierra automáticamente el Statement y ResultSet
+        try(Statement stmt = connection.createStatement())
+        {
+            
+            //Ejecutar la consulta y obtener el ResultSet
+            ResultSet resultado = stmt.executeQuery(sql);
+            
+            while(resultado.next())
+            {
+                
+                //Crear un nuevo objeto Clietne
+                Cliente cliente = new Cliente();
+                
+                
+                //Llenar el objeto Cliente con los datos de la base de datos. 
+                
+                cliente.setID(resultado.getInt("id"));
+                cliente.setRUC(resultado.getString("ruc"));
+                cliente.setRazonSocial(resultado.getString("razon_social"));
+                cliente.setTelefono(resultado.getString("telefono"));
+                cliente.setMensualidad(resultado.getDouble("mensualidad"));
+                cliente.setActivo(resultado.getBoolean("activo"));
+                
+                //Agregar el cliente a la lista.
+                
+                clientes.add(cliente);
+                
+            }
+        } catch(SQLException ex){
+            // Si hay error de base de datos, mostrar detalles para debuggear
+            ex.printStackTrace();
+            
+        }
+        
+        //retornar lista de clientes
+        return clientes;
     }
     
     @Override
