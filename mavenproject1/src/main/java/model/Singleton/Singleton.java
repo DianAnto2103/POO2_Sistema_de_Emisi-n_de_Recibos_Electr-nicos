@@ -12,13 +12,24 @@ import java.sql.Connection;
  */
 public class Singleton {
     private static Singleton instance;
-    private static Connection conexion;
-    private static String URL = "jdbc:sqlserver://localhost:1433;databaseName=OasisDB";
-    private static String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static String USUARIO = "developer";
-    private static String PASSWORD = "oasis123";
+    private Connection conexion;
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=OasisDB";
+    private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String USUARIO = "developer";
+    private static final String PASSWORD = "oasis123";
+    
+    private Singleton(){}
     
     public Singleton getInstance() {
+        if(instance == null){
+            instance = new Singleton();
+        }
         return instance;
+    }
+    
+    public static Connection conexion(){
+        
+        return null;
+        
     }
 }
