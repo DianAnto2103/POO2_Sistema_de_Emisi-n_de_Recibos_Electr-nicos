@@ -167,18 +167,75 @@ public class RepositorioClienteImp implements RepositorioCliente {
     @Override
     public void guardar(Cliente cliente)
     {
+        //Consulta SQl para insertar nuevos clients
+        
+        String sql = "INSERT INTO clientes (ruc, razon_social, telefono, mensualidad, activo) VALUES (?, ?, ?, ?, ?)";
+        
+        try(PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+            
+            //Establecer los valores por cada parámetro (?)
+            stmt.setString(1, cliente.getRUC());
+            stmt.setString(2, cliente.getRazonSocial());
+            stmt.setString(3, cliente.getTelefono());
+            stmt.setDouble(4, cliente.getMensualidad());
+            stmt.setBoolean(5, cliente.isActivo());
+            
+            //Ejecutar la inserción
+            stmt.executeUpdate();
+            
+            // Obtener el ID generado automáticamente por la base de datos
+            ResultSet resultado = stmt.getGeneratedKeys();    
+            if(resultado.next()){
+                // Asignar el ID generado al objeto cliente
+                cliente.setID(resultado.getInt(1));
+            }
+            
+        } catch(SQLException ex){
+            ex.printStackTrace();
+        }
         
     }
     
     @Override
     public void actualizar(Cliente cliente)
     {
- 
+        // Consulta SQL para actualizar cliente existentw
+        String sql = "UPDATE clientes SET ruc = ?, razon_social = ?, telefono = ?, mensualidad = ?, activo = ? WHERE id = ?";
+    
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) 
+        {
+            
+            // Establecer los nuevos valores para cada parámetro (?)
+            stmt.setString(1, cliente.getRUC());
+            stmt.setString(2, cliente.getRazonSocial());
+            stmt.setString(3, cliente.getTelefono());
+            stmt.setDouble(4, cliente.getMensualidad());
+            stmt.setBoolean(5, cliente.isActivo());
+            stmt.setInt(6, cliente.getID()); // WHERE id = ?
+        
+            // Ejecutar la actualización
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            
+            ex.printStackTrace();
+        }
     }
     
     @Override
     public void eliminar(Cliente cliente)
     {
+        // Consulta SQL para eliminación lógica..
+        String sql = "UPDATE clientes SET activo = 0 WHERE id = ?";
+        
+        try(PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            // Establecer el ID del cliente a eliminar
+            stmt.setInt(1, cliente.getID());
+             // Ejecutar la eliminación lógica
+             stmt.executeUpdate();
+        } catch(SQLException ex){
+            ex.printStackTrace();
+        }
         
     }
     
