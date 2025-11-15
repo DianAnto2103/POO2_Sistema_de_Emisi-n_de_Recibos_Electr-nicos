@@ -40,18 +40,7 @@ public class RepositorioClienteImp implements RepositorioCliente {
             // rs.next() avanza al primer registro y devuelve true si existe
             if(resultado.next())
             {
-                // Crear un nuevo objeto Cliente para llenar con datos de la BD
-                Cliente cliente = new Cliente();
-                
-                // Extraer cada campo de la base de datos y asignarlo al objeto
-                cliente.setID(resultado.getInt("id")); //ID numérico
-                cliente.setRUC(resultado.getString("ruc")); //RUC como String
-                cliente.setRazonSocial(resultado.getString("razon_social")); //Razón social
-                cliente.setTelefono(resultado.getString("telefono")); //teléfono
-                cliente.setMensualidad(resultado.getDouble("mensualidad")); //Monto mensual
-                cliente.setActivo(resultado.getBoolean("activo")); //Estado activo/inactivo
-                
-                return cliente; //retorna el cliente encontrado
+                return mapearCliente(resultado); //retorna el cliente encontrado
             }
             
         } catch (SQLException ex) {
@@ -82,23 +71,7 @@ public class RepositorioClienteImp implements RepositorioCliente {
             
             while(resultado.next())
             {
-                
-                //Crear un nuevo objeto Clietne
-                Cliente cliente = new Cliente();
-                
-                
-                //Llenar el objeto Cliente con los datos de la base de datos. 
-                
-                cliente.setID(resultado.getInt("id"));
-                cliente.setRUC(resultado.getString("ruc"));
-                cliente.setRazonSocial(resultado.getString("razon_social"));
-                cliente.setTelefono(resultado.getString("telefono"));
-                cliente.setMensualidad(resultado.getDouble("mensualidad"));
-                cliente.setActivo(resultado.getBoolean("activo"));
-                
-                //Agregar el cliente a la lista.
-                
-                clientes.add(cliente);
+                clientes.add(mapearCliente(resultado));
                 
             }
         } catch(SQLException ex){
@@ -112,11 +85,83 @@ public class RepositorioClienteImp implements RepositorioCliente {
     }
     
     @Override
-    public List<Cliente> buscarPorEjemplo(Cliente cliente)
+    public List<Cliente> buscarPorRUC(String ruc)
     {
+        List<Cliente> clientes = new ArrayList<>();
         
-        return null;
+        //Consulta SQL: Buscar cliente cuyo RUC empiece con texto ingresado..
+        String sql = "SELECT * FROM clientes WHERE ruc LIKE ? AND activo = 1 ORDER BY id ASC";
         
+        // try-with-resources: cierra automáticamente el PreparedStatement
+        try(PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+           /* Configurar el parámetro de búsqueda: ruc + "%" para búsqueda que empiece con... 
+            Ejemplo: si ruc = "201001", busca "201001%" */
+            
+            stmt.setString(1, ruc + "%");
+            
+            //Ejecutar la consulta y obtener resultados
+            
+            ResultSet resultado = stmt.executeQuery();
+            
+            
+            // Procesar cada registro encontrado
+            while(resultado.next())
+            {
+                clientes.add(mapearCliente(resultado));
+                
+            }
+            
+        } catch (SQLException ex){
+            ex.printStackTrace(); // Si hay error en la base de datos, mostrar el detalle
+        }
+        
+        return clientes; // Retornar la lista de clientes encontrados (puede estar vacía)
+        
+    }
+    
+    public List<Cliente> buscarPorRazonSocial(String razonSocial)
+    {
+        List<Cliente> clientes = new ArrayList<>();
+        
+        //Consulta SQL: Buscar cliente cuyo Razon Social empiece con texto ingresado..
+        String sql = "SELECT * FROM clientes WHERE razon_social LIKE ? AND activo = 1 ORDER BY razon_social ASC";
+        
+        try(PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, "%" + razonSocial + "%");
+            
+            ResultSet resultado = stmt.executeQuery();
+            
+            while(resultado.next()){
+                clientes.add(mapearCliente(resultado));
+            }
+            
+        } catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return clientes;       
+    }
+    
+    public List<Cliente> buscarActivos()
+    {
+        List<Cliente> clientes = new ArrayList<>();
+        
+        String sql = "SELECT * FROM clientes WHERE activo = 1 ORDER BY razon_social ASC";
+        
+        
+        try (Statement stmt = connection.createStatement()){
+            
+            ResultSet resultado = stmt.executeQuery(sql);
+            
+            while(resultado.next()){
+                clientes.add(mapearCliente(resultado));
+            }
+            
+        } catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return clientes;
     }
     
     @Override
@@ -135,6 +180,19 @@ public class RepositorioClienteImp implements RepositorioCliente {
     public void eliminar(Cliente cliente)
     {
         
+    }
+    
+    private Cliente mapearCliente(ResultSet resultado) throws SQLException 
+    {
+        // Método privado auxiliar para mapear ResultSet a Cliente (EVITA REPETICIÓN)
+        Cliente cliente = new Cliente();
+        cliente.setID(resultado.getInt("id"));
+        cliente.setRUC(resultado.getString("ruc"));
+        cliente.setRazonSocial(resultado.getString("razon_social"));
+        cliente.setTelefono(resultado.getString("telefono"));
+        cliente.setMensualidad(resultado.getDouble("mensualidad"));
+        cliente.setActivo(resultado.getBoolean("activo"));
+        return cliente;
     }
   
 }
