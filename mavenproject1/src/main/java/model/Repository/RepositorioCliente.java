@@ -17,7 +17,6 @@ public interface RepositorioCliente
     List<Cliente> buscarTodos();
     List<Cliente> buscarPorRUC(String ruc);
     List<Cliente> buscarPorRazonSocial(String razonSocial);
-    List<Cliente> buscarActivos(); 
     void guardar(Cliente cliente);
     void actualizar(Cliente cliente);
     void eliminar(Cliente cliente);

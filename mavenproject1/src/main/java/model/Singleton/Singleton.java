@@ -17,7 +17,7 @@ public class Singleton {
     private Connection conexion; //Conexión a la base de datos
     
     //Datos de conexión a SQL Server. final porque no cambian.
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=OasisDB";
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=OasisDB;trustServerCertificate=true";
     private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static final String USUARIO = "developer";
     private static final String PASSWORD = "oasis123";

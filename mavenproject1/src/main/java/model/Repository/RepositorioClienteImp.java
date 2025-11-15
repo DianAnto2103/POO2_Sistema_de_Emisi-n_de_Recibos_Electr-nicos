@@ -120,6 +120,7 @@ public class RepositorioClienteImp implements RepositorioCliente {
         
     }
     
+    @Override
     public List<Cliente> buscarPorRazonSocial(String razonSocial)
     {
         List<Cliente> clientes = new ArrayList<>();
@@ -142,28 +143,7 @@ public class RepositorioClienteImp implements RepositorioCliente {
         }
         return clientes;       
     }
-    
-    public List<Cliente> buscarActivos()
-    {
-        List<Cliente> clientes = new ArrayList<>();
-        
-        String sql = "SELECT * FROM clientes WHERE activo = 1 ORDER BY razon_social ASC";
-        
-        
-        try (Statement stmt = connection.createStatement()){
-            
-            ResultSet resultado = stmt.executeQuery(sql);
-            
-            while(resultado.next()){
-                clientes.add(mapearCliente(resultado));
-            }
-            
-        } catch(SQLException ex){
-            ex.printStackTrace();
-        }
-        return clientes;
-    }
-    
+
     @Override
     public void guardar(Cliente cliente)
     {
