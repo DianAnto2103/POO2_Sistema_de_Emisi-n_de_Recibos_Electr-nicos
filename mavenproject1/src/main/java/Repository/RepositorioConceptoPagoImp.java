@@ -12,7 +12,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.ConceptoPago;
-import model.Recibo;
 import model.Singleton.Singleton;
 
 /**

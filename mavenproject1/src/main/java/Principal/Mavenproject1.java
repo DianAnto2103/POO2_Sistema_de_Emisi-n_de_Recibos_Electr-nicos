@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.mavenproject1;
+package Principal;
 
 import controlador.HomeController;
 
@@ -13,7 +13,9 @@ import controlador.HomeController;
  */
 public class Mavenproject1 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         HomeController homeController = new HomeController();
     }
+        
 }

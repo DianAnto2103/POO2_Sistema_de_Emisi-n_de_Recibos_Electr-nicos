@@ -17,7 +17,7 @@ public class Recibo {
     private Date fechaEmision;
     private double total;
     private Cliente cliente;
-    private List<ConceptoPago> historialPago;
+    private List<ConceptoPago> conceptos;
     
     public int getID() {
         return ID;
@@ -59,12 +59,12 @@ public class Recibo {
         this.cliente = cliente;
     }
 
-    public List<ConceptoPago> getHistorialPago() {
-        return historialPago;
+    public List<ConceptoPago> getConceptos() {
+        return conceptos;
     }
 
-    public void setHistorialPago(List<ConceptoPago> historialPago) {
-        this.historialPago = historialPago;
+    public void setConceptos(List<ConceptoPago> conceptos) {
+        this.conceptos = conceptos;
     }
     
 }
