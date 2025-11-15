@@ -16,6 +16,7 @@ public class ConceptoPago {
     private String metodoPago;
     private Date fecha;
     private double monto;
+    private int reciboID;
     
     public int getCodigo() {
         return codigo;
@@ -55,6 +56,14 @@ public class ConceptoPago {
 
     public void setMonto(double monto) {
         this.monto = monto;
+    }
+    
+    public int getReciboID() {
+        return reciboID;
+    }
+
+    public void setReciboID(int reciboID) {
+        this.reciboID = reciboID;
     }
     
 }
