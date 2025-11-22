@@ -9,6 +9,9 @@ import model.Cliente;
  * @author Flavia
  */
 public class CalculoNormal implements CalculoStrategy {
+
+    public CalculoNormal() {
+    }
        
     @Override
     public double calcularMontoFinal(double montoBase, Cliente cliente) {

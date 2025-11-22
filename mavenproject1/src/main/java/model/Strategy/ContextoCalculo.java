@@ -45,4 +45,8 @@ public class ContextoCalculo {
     public String obtenerDescripcionEstrategia() {
         return estrategia != null ? estrategia.obtenerDescripcion() : "Sin estrategia";
     }
+
+    public void setEstrategia(DescuentoPagoAdelantado descuentoPagoAdelantado) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
