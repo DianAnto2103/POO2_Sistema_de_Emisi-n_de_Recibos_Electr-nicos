@@ -14,11 +14,11 @@ import java.util.List;
  * @author Flavia
  */
 public class ClienteService {
-    
+
     private RepositorioCliente repositorioCliente;
     
     public ClienteService() {
-        this.repositorioCliente = new RepositorioClienteImp ();
+        this.repositorioCliente = new RepositorioClienteImp();
     }
     
     /**

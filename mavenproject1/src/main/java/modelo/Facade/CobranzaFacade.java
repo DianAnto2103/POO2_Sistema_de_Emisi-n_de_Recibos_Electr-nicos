@@ -11,10 +11,6 @@ import model.Strategy.RecargoMora;
 import java.sql.Date;
 import java.util.List;
 
-/**
- *
- * @author Flavia
- */
 
 public class CobranzaFacade {
     
@@ -76,12 +72,7 @@ public class CobranzaFacade {
             // 3. Generar recibo
             Recibo recibo = reciboService.generarNuevoRecibo(cliente);
             
-            // 4. Guardar recibo primero para obtener su ID
-            if (!reciboService.guardarRecibo(recibo)) {
-                return new ResultadoOperacion(false, "Error al guardar recibo", null);
-            }
-            
-            // 5. Crear y registrar concepto
+            // 4. Crear y registrar concepto
             ConceptoPago concepto = new ConceptoPago();
             concepto.setDescripcion(descripcionPago);
             concepto.setMonto(montoFinal);
@@ -93,16 +84,15 @@ public class CobranzaFacade {
                 return new ResultadoOperacion(false, "Error al registrar pago", null);
             }
             
-            // 6. Actualizar total del recibo
+            // 5. Actualizar y guardar recibo
             reciboService.agregarConcepto(recibo, concepto);
-            reciboService.actualizarRecibo(recibo);
+            reciboService.guardarRecibo(recibo);
             
             System.out.println("✓ PAGO REGISTRADO EXITOSAMENTE\n");
             
             return new ResultadoOperacion(true, "Pago registrado", recibo.getNumeroRecibo());
             
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResultadoOperacion(false, "Error: " + e.getMessage(), null);
         }
     }
@@ -123,7 +113,6 @@ public class CobranzaFacade {
             
             configurarEstrategia(tipoCalculo);
             Recibo recibo = reciboService.generarNuevoRecibo(cliente);
-            reciboService.guardarRecibo(recibo);
             
             for (ConceptoPago concepto : conceptos) {
                 double montoCalculado = contextoCalculo.calcular(concepto.getMonto(), cliente);
@@ -134,7 +123,7 @@ public class CobranzaFacade {
                 reciboService.agregarConcepto(recibo, concepto);
             }
             
-            reciboService.actualizarRecibo(recibo);
+            reciboService.guardarRecibo(recibo);
             
             return new ResultadoOperacion(true, "Pagos registrados", recibo.getNumeroRecibo());
             
@@ -168,7 +157,7 @@ public class CobranzaFacade {
     }
     
     // ═══════════════════════════════════════════════════
-    // MÉTODOS DELEGADOS
+    // MÉTODOS DELEGADOS A SERVICIOS
     // ═══════════════════════════════════════════════════
     
     public ResultadoOperacion registrarCliente(String ruc, String razonSocial, String telefono, double mensualidad) {
@@ -185,12 +174,9 @@ public class CobranzaFacade {
     }
     
     public Cliente buscarCliente(String criterio) {
-        if (criterio.matches("\\d{11}")) {
-            return clienteService.buscarPorRUC(criterio);
-        } else {
-            List<Cliente> clientes = clienteService.buscarPorRazonSocial(criterio);
-            return clientes.isEmpty() ? null : clientes.get(0);
-        }
+        return criterio.matches("\\d{11}") 
+            ? clienteService.buscarPorRUC(criterio)
+            : clienteService.buscarPorRazonSocial(criterio).stream().findFirst().orElse(null);
     }
     
     public List<Cliente> listarClientes() {
@@ -205,6 +191,10 @@ public class CobranzaFacade {
         Cliente cliente = clienteService.buscarPorRUC(clienteRUC);
         return cliente != null ? cobranzaService.calcularTotalPagado(cliente.getID()) : 0.0;
     }
+    
+    // 
+    // MÉTODO AUXILIAR
+    // 
     
     private void configurarEstrategia(String tipo) {
         switch (tipo.toUpperCase()) {
@@ -222,14 +212,14 @@ public class CobranzaFacade {
         }
     }
     
-    // 
+    // ═══════════════════════════════════════════════════
     // CLASE INTERNA
-    // 
+    // ═══════════════════════════════════════════════════
     
     public static class ResultadoOperacion {
         private boolean exito;
         private String mensaje;
-        private String dato;
+        private final String dato;
         
         public ResultadoOperacion(boolean exito, String mensaje, String dato) {
             this.exito = exito;
@@ -240,11 +230,5 @@ public class CobranzaFacade {
         public boolean isExito() { return exito; }
         public String getMensaje() { return mensaje; }
         public String getDato() { return dato; }
-        
-        @Override
-        public String toString() {
-            return String.format("Resultado[Éxito=%s, Mensaje=%s]", exito, mensaje);
-        }
     }
 }
-
