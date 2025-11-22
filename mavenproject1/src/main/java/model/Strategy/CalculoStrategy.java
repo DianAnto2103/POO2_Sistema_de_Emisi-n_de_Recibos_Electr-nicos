@@ -10,9 +10,9 @@ import model.Cliente;
  * @author Flavia
  */
 public interface CalculoStrategy {
-    
+
     double calcularMontoFinal(double montoBase, Cliente cliente);
     String obtenerDescripcion();
     String getTipo();
-    
 }
+    
