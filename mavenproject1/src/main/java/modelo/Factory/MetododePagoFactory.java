@@ -9,5 +9,5 @@ package modelo.Factory;
  * @author diana
  */
 public abstract class MetododePagoFactory {
-
+    
 }
