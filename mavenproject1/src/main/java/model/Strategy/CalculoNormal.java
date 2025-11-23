@@ -4,15 +4,13 @@
  */
 package model.Strategy;
 import model.Cliente;
+
 /**
  *
  * @author Flavia
  */
 public class CalculoNormal implements CalculoStrategy {
-
-    public CalculoNormal() {
-    }
-       
+    
     @Override
     public double calcularMontoFinal(double montoBase, Cliente cliente) {
         System.out.println("═══════════════════════════════════════════");
@@ -32,5 +30,5 @@ public class CalculoNormal implements CalculoStrategy {
     @Override
     public String getTipo() {
         return "NORMAL";
-    } 
+    }
 }
