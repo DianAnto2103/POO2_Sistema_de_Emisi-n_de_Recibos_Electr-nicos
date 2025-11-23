@@ -23,9 +23,7 @@ public class CobranzaFacade {
     // Strategy
     private ContextoCalculo contextoCalculo;
     
-    /**
-     * Constructor
-     */
+    
     public CobranzaFacade() {
         this.clienteService = new ClienteService();
         this.reciboService = new ReciboService();
@@ -156,9 +154,9 @@ public class CobranzaFacade {
         }
     }
     
-    // ═══════════════════════════════════════════════════
+    //
     // MÉTODOS DELEGADOS A SERVICIOS
-    // ═══════════════════════════════════════════════════
+    //
     
     public ResultadoOperacion registrarCliente(String ruc, String razonSocial, String telefono, double mensualidad) {
         Cliente cliente = new Cliente();
@@ -196,25 +194,24 @@ public class CobranzaFacade {
     // MÉTODO AUXILIAR
     // 
     
-    private void configurarEstrategia(String tipo) {
-        switch (tipo.toUpperCase()) {
-            case "DESCUENTO_ADELANTADO":
-            case "ADELANTADO":
-                contextoCalculo.setEstrategia(new DescuentoPagoAdelantado());
-                break;
-            case "RECARGO_MORA":
-            case "MORA":
-                contextoCalculo.setEstrategia(new RecargoMora());
-                break;
+    private void configurarEstrategia (String tipo){
+    switch (tipo.toUpperCase()){
+        case "DESCUENTO_ADELANTADO":
+        case "ADELANTADO":
+            contextoCalculo.setEstrategia(new DescuentoPagoAdelantado());
+            break;
+        case "RECARGO_MORA":
+        case "MORA":
+            contextoCalculo.setEstrategia (new RecargoMora());
+            break;
             default:
-                contextoCalculo.setEstrategia(new CalculoNormal());
-                break;
-        }
+            contextoCalculo.setEstrategia(new CalculoNormal() );
+            break;
     }
-    
-    // ═══════════════════════════════════════════════════
+    }
+    //
     // CLASE INTERNA
-    // ═══════════════════════════════════════════════════
+    //
     
     public static class ResultadoOperacion {
         private boolean exito;
