@@ -13,11 +13,11 @@ public class CalculoNormal implements CalculoStrategy {
     
     @Override
     public double calcularMontoFinal(double montoBase, Cliente cliente) {
-        System.out.println("═══════════════════════════════════════════");
+        System.out.println("-----------------------------------");
         System.out.println("  CÁLCULO NORMAL - Sin ajustes");
-        System.out.println("═══════════════════════════════════════════");
+        System.out.println("-----------------------------------");
         System.out.println(String.format("  Monto: S/ %.2f", montoBase));
-        System.out.println("═══════════════════════════════════════════\n");
+        System.out.println("------------------------------------\n");
         
         return montoBase;
     }

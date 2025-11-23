@@ -18,7 +18,7 @@ public class DescuentoPagoAdelantado implements CalculoStrategy {
         double montoFinal = montoBase - descuento;
         
         System.out.println("═══════════════════════════════════════════");
-        System.out.println("  ✓ DESCUENTO POR PAGO ADELANTADO");
+        System.out.println("  DESCUENTO POR PAGO ADELANTADO");
         System.out.println("═══════════════════════════════════════════");
         System.out.println(String.format("  Cliente: %s", cliente.getRazonSocial()));
         System.out.println(String.format("  Monto base: S/ %.2f", montoBase));
