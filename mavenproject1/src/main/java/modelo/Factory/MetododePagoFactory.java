@@ -1,13 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo.Factory;
 
-/**
- *
- * @author diana
- */
-public abstract class MetododePagoFactory {
-    
+public class MetododePagoFactory {
+
+    public static MetododePago getMetodoPago(String tipo) {
+        if (tipo == null) return null;
+
+        switch (tipo.toUpperCase()) {
+            case "EFECTIVO":
+                return new PagoEfectivo();
+            case "TRANSFERENCIA":
+                return new PagoTransferencia();
+            case "TARJETA":
+                return new PagoTarjeta();
+            case "YAPE":
+                return new PagoYape();
+            case "PLIN":
+                return new PagoPlin();
+
+            default:
+                System.out.println("Método de pago no válido.");
+                return null;
+        }
+    }
 }
