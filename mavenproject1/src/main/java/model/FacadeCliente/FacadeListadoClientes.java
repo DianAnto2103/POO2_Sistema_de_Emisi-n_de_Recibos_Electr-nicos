@@ -13,10 +13,10 @@ import model.Cliente;
  *
  * @author diana
  */
-public class FacadeCliente {
+public class FacadeListadoClientes {
     private RepositorioCliente repoCliente;
     
-    public FacadeCliente() 
+    public FacadeListadoClientes() 
     {
         this.repoCliente = new RepositorioClienteImp();
     }

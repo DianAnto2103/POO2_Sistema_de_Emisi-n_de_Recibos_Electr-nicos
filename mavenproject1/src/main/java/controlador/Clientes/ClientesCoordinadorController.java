@@ -43,6 +43,13 @@ public final class ClientesCoordinadorController implements NavegacionCliente {
     }
     
     @Override
+    public void recargarListaClientes() 
+    {
+       // Llama al método recargarClientes del ListaClientesController
+       controllerListaClientes.cargarClientes();
+    }
+    
+    @Override
     public void mostrarListaClientes(){ 
         mostrarVista(controllerListaClientes.getVistaListaCliente()); //utilzia el metodo mostrarVista que esta al final. 
         //Le pasa el getVista que anteriormente habiamos creado en cada clase controller. 

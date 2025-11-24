@@ -13,4 +13,5 @@ public interface NavegacionCliente {
     public void mostrarAgregarCliente();
     public void mostrarModificarCliente();
     public void cerrarVentana();
+    public void recargarListaClientes();
 }
