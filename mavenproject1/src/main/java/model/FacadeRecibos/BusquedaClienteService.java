@@ -23,7 +23,7 @@ public class BusquedaClienteService {
     }
     
     //Clientes por nombre EXACTO.
-    public Cliente buscarPorNombreExacto(List<Cliente> clientes, String razonSocial) {
+    public Cliente buscarPorRazonSocialExacto(List<Cliente> clientes, String razonSocial) {
         return clientes.stream()
                 .filter(c -> c.getRazonSocial().equals(razonSocial))
                 .findFirst()

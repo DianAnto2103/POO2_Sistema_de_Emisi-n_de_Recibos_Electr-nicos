@@ -11,18 +11,21 @@ package model.FacadeRecibos;
 import Repository.*;
 import java.util.List;
 import model.Cliente;
+import model.ConceptoPago;
 
 public class FacadeRecibos {
     private final GeneradorNumeracionService generadorNumeros;
     private final BusquedaClienteService busquedaCliente;
     private final RepositorioRecibo repoRecibo;
     private final RepositorioCliente repoCliente;
+    private ValidadorConceptoService validadorConcepto;
     
     public FacadeRecibos() {
         this.generadorNumeros = new GeneradorNumeracionService();
         this.busquedaCliente = new BusquedaClienteService();
         this.repoRecibo = new RepositorioReciboImp();
         this.repoCliente = new RepositorioClienteImp();
+        this.validadorConcepto = new ValidadorConceptoService();
     }
     
     //generar numero recibo nuevo
@@ -42,6 +45,13 @@ public class FacadeRecibos {
     
     public Cliente buscarClientePorNombre(String razonSocial) {
         List<Cliente> clientes = repoCliente.buscarTodos();
-        return busquedaCliente.buscarPorNombreExacto(clientes, razonSocial);
+        return busquedaCliente.buscarPorRazonSocialExacto(clientes, razonSocial);
+    }
+    
+    public boolean agregarConcepto(ConceptoPago concepto) {
+        if (validadorConcepto.validarConcepto(concepto)) {
+            return true;
+        }
+        return false;
     }
 }
