@@ -33,7 +33,28 @@ public final class ListaClientesController {
     
     public void configurarEventos(){
         vistaListaCliente.getBotonAgregarCliente().addActionListener(e -> navegacion.mostrarAgregarCliente());
-        vistaListaCliente.getBotonBuscarCliente().addActionListener(e -> navegacion.mostrarModificarCliente());
+        // Configura el botón modificar cliente para editar cliente seleccionado
+        vistaListaCliente.getBotonBuscarCliente().addActionListener(e -> {
+            // Obtener la fila seleccionada en la tabla de clientes
+            int filaSeleccionada = vistaListaCliente.getTablaCliente().getSelectedRow();
+            
+            // Verificar si el usuario ha seleccionado alguna fila. Si es -1 entonces NO hay ninguna fila selccionada
+            if (filaSeleccionada == -1) {
+                javax.swing.JOptionPane.showMessageDialog(vistaListaCliente, 
+                    "Por favor, seleccione un cliente de la lista!!", 
+                    "Selección requerida", 
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            // Obtener el ID del cliente desde la columna 0 de la fila seleccionada. Tiene que tener el id del cliente la columna
+            int idCliente = (int) vistaListaCliente.getTablaCliente().getValueAt(filaSeleccionada, 0);
+            
+            
+            // Navegar al formulario de modificación pasando el ID del cliente seleccionado
+            navegacion.mostrarModificarCliente(idCliente);
+            
+        });
     }
     
     public void cargarClientes(){

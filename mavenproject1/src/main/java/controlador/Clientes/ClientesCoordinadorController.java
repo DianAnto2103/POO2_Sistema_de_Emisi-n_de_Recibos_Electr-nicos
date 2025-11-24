@@ -39,7 +39,7 @@ public final class ClientesCoordinadorController implements NavegacionCliente {
         
         this.controllerListaClientes = new ListaClientesController(vistaListaClientes, this); //se pasa esta misma clase como NAVEGACIÓN, porque es el que maneja todo. 
         this.controllerAgregarClientes= new AgregarClienteController(vistaAgregarClientes, this); //igual aqui
-        this.controllerModificarClientes = new ModificarClienteController(vistaModificarClientes, this);
+        this.controllerModificarClientes = null;
     }
     
     @Override
@@ -58,8 +58,11 @@ public final class ClientesCoordinadorController implements NavegacionCliente {
     public void mostrarAgregarCliente(){
         mostrarVista(controllerAgregarClientes.getVistaAgregarCliente());
     }
+    
     @Override
-    public void mostrarModificarCliente(){
+    public void mostrarModificarCliente(int idCliente){
+        ModificarClienteView vistaModificarClientes = new ModificarClienteView();
+        this.controllerModificarClientes = new ModificarClienteController(vistaModificarClientes, this, idCliente);
         mostrarVista(controllerModificarClientes.getVistaBuscarCliente());
     }
     
