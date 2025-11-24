@@ -278,6 +278,8 @@ public class AgregarClienteView extends javax.swing.JPanel {
     public JButton getBotonVolver() {
         return botonVolver;
     }
+    
+    
 
 
 }
