@@ -5,6 +5,7 @@
 package vista;
 
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 /**
  *
@@ -43,7 +44,7 @@ public class ReciboView extends javax.swing.JPanel {
         botonBusqueda = new javax.swing.JButton();
         jTextField12 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jTextField8 = new javax.swing.JTextField();
+        TxtNumeroRecibo = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
@@ -202,10 +203,14 @@ public class ReciboView extends javax.swing.JPanel {
         jPanel2.setBackground(getBackground());
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "NUMERO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 14))); // NOI18N
 
-        jTextField8.setEditable(false);
-        jTextField8.setText("jTextField8");
-        jTextField8.setAutoscrolls(false);
-        jTextField8.setEnabled(false);
+        TxtNumeroRecibo.setEditable(false);
+        TxtNumeroRecibo.setAutoscrolls(false);
+        TxtNumeroRecibo.setEnabled(false);
+        TxtNumeroRecibo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtNumeroReciboActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -213,14 +218,14 @@ public class ReciboView extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addComponent(TxtNumeroRecibo, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField8)
+                .addComponent(TxtNumeroRecibo)
                 .addGap(8, 8, 8))
         );
 
@@ -577,9 +582,15 @@ public class ReciboView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void TxtNumeroReciboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtNumeroReciboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtNumeroReciboActionPerformed
+
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField TxtNumeroRecibo;
     private javax.swing.JButton botoNuevo;
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonBorrar;
@@ -619,10 +630,13 @@ public class ReciboView extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 
+    public JTextField getTxtNumeroRecibo() {
+        return TxtNumeroRecibo;
+    }
+    
     public JButton getBotoNuevo() {
         return botoNuevo;
     }

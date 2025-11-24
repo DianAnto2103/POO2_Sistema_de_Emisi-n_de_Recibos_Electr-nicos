@@ -18,6 +18,15 @@ public class Recibo {
     private double total;
     private Cliente cliente;
     private List<ConceptoPago> conceptos;
+    private int usuarioId = 1;
+    
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
     
     public int getID() {
         return ID;

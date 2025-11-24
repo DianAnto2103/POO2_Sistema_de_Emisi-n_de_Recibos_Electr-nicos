@@ -12,9 +12,9 @@ import model.Cliente;
  * @author diana
  */
 public class FacadeActualizarCliente {
-    private RepositorioClienteImp repoCliente;
-    private ValidadorActualizacionCliente validador;
-    private ActualizadorCliente actualizador;
+    private final RepositorioClienteImp repoCliente;
+    private final ValidadorActualizacionCliente validador;
+    private final ActualizadorCliente actualizador;
     
     public FacadeActualizarCliente() {
         this.repoCliente = new RepositorioClienteImp();

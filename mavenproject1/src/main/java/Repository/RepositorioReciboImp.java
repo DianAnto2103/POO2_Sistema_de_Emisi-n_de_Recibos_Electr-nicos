@@ -143,6 +143,7 @@ public class RepositorioReciboImp implements RepositorioRecibo{
             stmt.setDate(2, new java.sql.Date(recibo.getFechaEmision().getTime()));
             stmt.setDouble(3, recibo.getTotal());
             stmt.setInt(4, recibo.getCliente().getID());
+            stmt.setInt(5, 1);
             stmt.setBoolean(6, true); // Por defecto activo
             
             stmt.executeUpdate();

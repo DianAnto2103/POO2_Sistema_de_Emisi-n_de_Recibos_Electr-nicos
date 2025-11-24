@@ -5,6 +5,7 @@
 package controlador;
 
 import javax.swing.*;
+import model.FacadeRecibos.FacadeRecibos;
 import vista.ReciboView;
 
 /**
@@ -14,12 +15,20 @@ import vista.ReciboView;
 public final class RegistroController {
     private final JFrame frameReportes;
     private final ReciboView vistaRecibo;
+    private final FacadeRecibos facadeRecibos;
     
     public RegistroController(JFrame frameReportes){
         this.frameReportes = frameReportes;
         this.vistaRecibo = new ReciboView();
+        this.facadeRecibos = new FacadeRecibos();
         configurarEventos();
+        generarNumeroReciboAutomatico();
         
+    }
+    
+    private void generarNumeroReciboAutomatico() {
+        String numeroRecibo = facadeRecibos.generarNuevoNumeroRecibo();
+        vistaRecibo.getTxtNumeroRecibo().setText(numeroRecibo); // "R-001"
     }
     
     public void configurarEventos(){
