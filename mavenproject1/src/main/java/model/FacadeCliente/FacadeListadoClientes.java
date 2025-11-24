@@ -26,4 +26,14 @@ public class FacadeListadoClientes {
         return ConvertidorModelo.clientesATableModelo(clientes);
     }
     
+    public DefaultTableModel buscarClientesPorRUC(String ruc) {
+        List<Cliente> clientes = repoCliente.buscarPorRUC(ruc);
+        return ConvertidorModelo.clientesATableModelo(clientes);
+    }
+    
+    public DefaultTableModel buscarClientesPorRazonSocial(String razonSocial) {
+        List<Cliente> clientes = repoCliente.buscarPorRazonSocial(razonSocial);
+        return ConvertidorModelo.clientesATableModelo(clientes);
+    }
+    
 }

@@ -4,8 +4,11 @@
  */
 package vista;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -18,6 +21,7 @@ public class ListarClientesView extends javax.swing.JPanel {
      */
     public ListarClientesView() {
         initComponents();
+        agruparRadios();
     }
 
     /**
@@ -41,9 +45,10 @@ public class ListarClientesView extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jTextField7 = new javax.swing.JTextField();
+        buscarRazonSocial = new javax.swing.JRadioButton();
+        buscarRUC = new javax.swing.JRadioButton();
+        txtBuscar = new javax.swing.JTextField();
+        botonBuscar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(236, 240, 241));
 
@@ -155,36 +160,50 @@ public class ListarClientesView extends javax.swing.JPanel {
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "BUSCAR POR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 14))); // NOI18N
 
-        jRadioButton3.setText("Razon Social");
+        buscarRazonSocial.setText("Razon Social");
+        buscarRazonSocial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarRazonSocialActionPerformed(evt);
+            }
+        });
 
-        jRadioButton4.setText("RUC");
+        buscarRUC.setText("RUC");
 
-        jTextField7.setText("jTextField2");
+        botonBuscar.setText("🔍");
+        botonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jRadioButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE)
+                .addComponent(buscarRUC, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buscarRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(botonBuscar)
+                .addGap(23, 23, 23))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buscarRUC, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(botonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -194,7 +213,7 @@ public class ListarClientesView extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -263,10 +282,21 @@ public class ListarClientesView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton13ActionPerformed
 
+    private void buscarRazonSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarRazonSocialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscarRazonSocialActionPerformed
+
+    private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregarCliente;
+    private javax.swing.JButton botonBuscar;
     private javax.swing.JButton botonModificarCliente;
+    private javax.swing.JRadioButton buscarRUC;
+    private javax.swing.JRadioButton buscarRazonSocial;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
@@ -274,19 +304,51 @@ public class ListarClientesView extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTable tablaClientes;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
+    
+    public JRadioButton getRadioRUC() { 
+        return buscarRUC; 
+    }
+    public JRadioButton getRadioRazonSocial() { 
+        return buscarRazonSocial; 
+    }
+    public JTextField getTxtBuscar() { 
+        return txtBuscar; 
+    }
+    
+    public JButton getBotonBuscar() { 
+        return botonBuscar; 
+    }
+    
+    private void agruparRadios() {
+        ButtonGroup grupo = new ButtonGroup();
+        grupo.add(buscarRUC);
+        grupo.add(buscarRazonSocial);
+    }
+    
+    // Método para saber qué tipo de búsqueda está seleccionada
+    public String getTipoBusqueda() {
+        if (buscarRUC.isSelected()) {
+            return "RUC";
+        } else if (buscarRazonSocial.isSelected()) {
+            return "RAZON_SOCIAL";
+        }
+        return "TODOS"; // Si ninguno está seleccionado
+    }
+    
+    public JButton getbotonBuscar(){
+        return botonBuscar;
+    }
 
     public JButton getBotonAgregarCliente(){
         return botonAgregarCliente;
     }
     
-    public JButton getBotonBuscarCliente(){
+    public JButton getBotonModificarCliente(){
         return botonModificarCliente;
     }
     
