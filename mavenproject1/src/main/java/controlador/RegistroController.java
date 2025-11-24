@@ -4,6 +4,7 @@
  */
 package controlador;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -101,11 +102,28 @@ public final class RegistroController {
             conceptosTemporales.add(concepto);
             actualizarTablaConceptos();
             limpiarFormularioConcepto();
+            actualizarTotal();
             
             JOptionPane.showMessageDialog(vistaRecibo, "Concepto agregado");
             
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(vistaRecibo, "Monto debe ser un número válido");
+        }
+    }
+    
+    private void actualizarTotal() {
+    // 1. Calcular total usando el Facade
+        double total = facadeRecibos.calcularTotalConceptos(conceptosTemporales);
+    
+    // 2. Formatear y mostrar
+        String totalFormateado = "S/ " + String.format("%,.2f", total);
+        vistaRecibo.getTxtTotal().setText(totalFormateado);
+    
+    // 3. Resaltar si supera S/ 10,000 (HU5)
+        if (total > 10000.00) {
+            vistaRecibo.getTxtTotal().setBackground(Color.YELLOW);
+        } else {
+            vistaRecibo.getTxtTotal().setBackground(Color.WHITE);
         }
     }
     

@@ -18,7 +18,8 @@ public class FacadeRecibos {
     private final BusquedaClienteService busquedaCliente;
     private final RepositorioRecibo repoRecibo;
     private final RepositorioCliente repoCliente;
-    private ValidadorConceptoService validadorConcepto;
+    private final ValidadorConceptoService validadorConcepto;
+    private final CalculadoraTotalService calculadoraTotal;
     
     public FacadeRecibos() {
         this.generadorNumeros = new GeneradorNumeracionService();
@@ -26,6 +27,7 @@ public class FacadeRecibos {
         this.repoRecibo = new RepositorioReciboImp();
         this.repoCliente = new RepositorioClienteImp();
         this.validadorConcepto = new ValidadorConceptoService();
+        this.calculadoraTotal = new CalculadoraTotalService();
     }
     
     //generar numero recibo nuevo
@@ -49,9 +51,18 @@ public class FacadeRecibos {
     }
     
     public boolean agregarConcepto(ConceptoPago concepto) {
-        if (validadorConcepto.validarConcepto(concepto)) {
-            return true;
-        }
-        return false;
+        return validadorConcepto.validarConcepto(concepto);
+    }
+    
+    public double calcularTotalConceptos(List<ConceptoPago> conceptos) {
+        return calculadoraTotal.calcularTotal(conceptos);
+    }
+    
+    public String formatearTotal(double total) {
+        return calculadoraTotal.formatearTotal(total);
+    }
+    
+     public boolean superaLimiteTotal(double total) {
+        return calculadoraTotal.superaLimite(total, 10000.00); // HU5: S/ 10,000
     }
 }
