@@ -22,11 +22,10 @@ public class ClienteService {
     }
     
     /**
-     * Buscar cliente por RUC (retorna el primero encontrado)
+     * Buscar cliente por RUC
      */
     public Cliente buscarPorRUC(String ruc) {
         if (ruc == null || ruc.trim().isEmpty()) {
-            System.out.println("✗ RUC vacío");
             return null;
         }
         
@@ -34,11 +33,9 @@ public class ClienteService {
         
         if (!clientes.isEmpty()) {
             Cliente cliente = clientes.get(0);
-            System.out.println("✓ Cliente encontrado: " + cliente.getRazonSocial());
             return cliente;
         }
         
-        System.out.println("✗ Cliente no encontrado con RUC: " + ruc);
         return null;
     }
     
@@ -51,7 +48,6 @@ public class ClienteService {
         }
         
         List<Cliente> clientes = repositorioCliente.buscarPorRazonSocial(razonSocial);
-        System.out.println("✓ Clientes encontrados: " + clientes.size());
         return clientes;
     }
     
@@ -60,9 +56,6 @@ public class ClienteService {
      */
     public Cliente buscarPorID(int id) {
         Cliente cliente = repositorioCliente.buscarPorID(id);
-        if (cliente != null) {
-            System.out.println("✓ Cliente encontrado: " + cliente.getRazonSocial());
-        }
         return cliente;
     }
     
@@ -77,16 +70,13 @@ public class ClienteService {
         // Verificar si ya existe
         List<Cliente> existentes = repositorioCliente.buscarPorRUC(cliente.getRUC());
         if (!existentes.isEmpty()) {
-            System.out.println("✗ Ya existe un cliente con el RUC: " + cliente.getRUC());
             return false;
         }
         
         try {
             repositorioCliente.guardar(cliente);
-            System.out.println("✓ Cliente registrado: " + cliente.getRazonSocial());
             return true;
         } catch (Exception e) {
-            System.out.println("✗ Error al registrar cliente: " + e.getMessage());
             return false;
         }
     }
@@ -101,10 +91,8 @@ public class ClienteService {
         
         try {
             repositorioCliente.actualizar(cliente);
-            System.out.println("✓ Cliente actualizado: " + cliente.getRazonSocial());
             return true;
         } catch (Exception e) {
-            System.out.println("✗ Error al actualizar cliente: " + e.getMessage());
             return false;
         }
     }
@@ -115,17 +103,14 @@ public class ClienteService {
     public boolean eliminarCliente(int id) {
         Cliente cliente = repositorioCliente.buscarPorID(id);
         if (cliente == null) {
-            System.out.println("✗ Cliente no encontrado");
             return false;
         }
         
         try {
             cliente.setActivo(false);
             repositorioCliente.actualizar(cliente);
-            System.out.println("✓ Cliente marcado como inactivo");
             return true;
         } catch (Exception e) {
-            System.out.println("✗ Error al eliminar cliente: " + e.getMessage());
             return false;
         }
     }
@@ -150,7 +135,6 @@ public class ClienteService {
             }
         }
         
-        System.out.println("✓ Clientes activos: " + activos.size());
         return activos;
     }
     
@@ -167,27 +151,22 @@ public class ClienteService {
      */
     private boolean validarCliente(Cliente cliente) {
         if (cliente == null) {
-            System.out.println("✗ Cliente no puede ser null");
             return false;
         }
         
         if (cliente.getRUC() == null || !cliente.getRUC().matches("\\d{11}")) {
-            System.out.println("✗ RUC inválido (debe tener 11 dígitos)");
             return false;
         }
         
         if (cliente.getRazonSocial() == null || cliente.getRazonSocial().trim().isEmpty()) {
-            System.out.println("✗ Razón social vacía");
             return false;
         }
         
         if (cliente.getTelefono() == null || !cliente.getTelefono().matches("\\d{9}")) {
-            System.out.println("✗ Teléfono inválido (debe tener 9 dígitos)");
             return false;
         }
         
         if (cliente.getMensualidad() <= 0) {
-            System.out.println("✗ Mensualidad debe ser mayor a 0");
             return false;
         }
         
