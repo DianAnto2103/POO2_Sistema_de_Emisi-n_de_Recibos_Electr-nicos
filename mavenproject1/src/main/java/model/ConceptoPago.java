@@ -18,6 +18,7 @@ public class ConceptoPago {
     private double monto;
     private int reciboID;
     private String tipoEstrategia;
+    private double montoBase;
     
     public String getTipoEstrategia() {
         return tipoEstrategia;
@@ -25,6 +26,13 @@ public class ConceptoPago {
     
     public void setTipoEstrategia(String tipoEstrategia) {
         this.tipoEstrategia = tipoEstrategia;
+    }
+    public double getMontoBase() {
+        return montoBase;
+    }
+    
+    public void setMontoBase(double montoBase) {
+        this.montoBase = montoBase;
     }
     
     public int getCodigo() {
