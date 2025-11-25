@@ -5,7 +5,7 @@
 package controlador;
 
 import controlador.Clientes.ClientesCoordinadorController;
-import controlador.Reportes.ReportesCoordinadorController;
+import controlador.Reportes.EstadoDeCuentaController;
 import javax.swing.*;
 import vista.MenuPrincipalView;
 
@@ -55,9 +55,10 @@ public class MenuController {
     public void abrirVentanaReportes(){
         JFrame ventanaFlotante3 = new JFrame("Reportes");
         
-        ReportesCoordinadorController coordinadorReporte = new ReportesCoordinadorController(ventanaFlotante3);
+        EstadoDeCuentaController estadoDeCuenta = new EstadoDeCuentaController(ventanaFlotante3);
         
         ventanaFlotante3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ventanaFlotante3.getContentPane().add(estadoDeCuenta.getVistaEstadodeCuenta());
         ventanaFlotante3.pack();
         ventanaFlotante3.setLocationRelativeTo(null);
         ventanaFlotante3.setResizable(false);

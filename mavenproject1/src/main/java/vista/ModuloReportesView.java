@@ -31,7 +31,6 @@ public class ModuloReportesView extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         botonEstado = new javax.swing.JButton();
-        botonDeudores = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jTextField6 = new javax.swing.JTextField();
@@ -51,21 +50,11 @@ public class ModuloReportesView extends javax.swing.JPanel {
 
         botonEstado.setBackground(new java.awt.Color(232, 232, 232));
         botonEstado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        botonEstado.setText("Estado de Cuenta");
+        botonEstado.setText("Estado de Cuenta x Cliente");
         botonEstado.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         botonEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonEstadoActionPerformed(evt);
-            }
-        });
-
-        botonDeudores.setBackground(new java.awt.Color(232, 232, 232));
-        botonDeudores.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        botonDeudores.setText("Clientes Deudores");
-        botonDeudores.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonDeudores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonDeudoresActionPerformed(evt);
             }
         });
 
@@ -74,19 +63,15 @@ public class ModuloReportesView extends javax.swing.JPanel {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(botonDeudores, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(botonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addGap(102, 102, 102)
+                .addComponent(botonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(botonEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                    .addComponent(botonDeudores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(botonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
         );
 
@@ -226,13 +211,8 @@ public class ModuloReportesView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_botonEstadoActionPerformed
 
-    private void botonDeudoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDeudoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonDeudoresActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonDeudores;
     private javax.swing.JButton botonEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -246,10 +226,6 @@ public class ModuloReportesView extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
-
-    public JButton getBotonDeudores() {
-        return botonDeudores;
-    }
 
     public JButton getBotonEstado() {
         return botonEstado;

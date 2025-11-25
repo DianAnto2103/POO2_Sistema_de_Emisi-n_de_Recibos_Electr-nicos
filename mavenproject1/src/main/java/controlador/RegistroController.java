@@ -26,21 +26,16 @@ import model.Strategy.ContextoCalculo;
  * @author diana y Flavia
  */
 public final class RegistroController {
-    private final JFrame frameReportes;
+    private final JFrame frameRegistro;
     private final ReciboView vistaRecibo;
     private final FacadeRecibos facadeRecibos;
     private final List<ConceptoPago> conceptosTemporales;
-    private final ContextoCalculo contextoCalculo;
-    private CalculoStrategy estrategiaActual;
     
- public RegistroController(JFrame frameReportes){
-        this.frameReportes = frameReportes;
+ public RegistroController(JFrame frameRegistro){
+        this.frameRegistro = frameRegistro;
         this.vistaRecibo = new ReciboView();
         this.facadeRecibos = new FacadeRecibos();
-        this.conceptosTemporales = new ArrayList<>();
-        this.contextoCalculo = new ContextoCalculo(); // Inicializar Strategy
-        this.estrategiaActual = new CalculoNormal(); // Estrategia por defecto
-        
+        this.conceptosTemporales = new ArrayList<>();     
         configurarEventos();
         inicializarFormulario();
         configurarStrategyInicial();
@@ -301,7 +296,7 @@ public final class RegistroController {
     
     
     private void cerrarVentana(){
-        frameReportes.dispose();
+        frameRegistro.dispose();
     }
     
     public ReciboView getVistaRegistro(){

@@ -107,7 +107,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         botonReporte.setBackground(new java.awt.Color(30, 137, 243));
         botonReporte.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         botonReporte.setForeground(new java.awt.Color(231, 230, 230));
-        botonReporte.setText("Reportes");
+        botonReporte.setText("Estado de Cuenta x Cliente");
         botonReporte.setBorder(null);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
