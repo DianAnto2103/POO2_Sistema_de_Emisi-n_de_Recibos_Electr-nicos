@@ -14,13 +14,13 @@ import java.util.List;
 
 public class CobranzaFacade {
     
-    // Servicios
+   
     private ClienteService clienteService;
     private ReciboService reciboService;
     private CobranzaService cobranzaService;
     private ExportadorPDFService exportadorPDFService;
     
-    // Strategy
+    
     private ContextoCalculo contextoCalculo;
     
     
@@ -31,14 +31,9 @@ public class CobranzaFacade {
         this.exportadorPDFService = new ExportadorPDFService();
         this.contextoCalculo = new ContextoCalculo();
         
-        System.out.println("═══════════════════════════════════════════");
-        System.out.println("  ✓ Sistema de Cobranzas Inicializado");
-        System.out.println("═══════════════════════════════════════════\n");
     }
     
-    /**
-     * MÉTODO PRINCIPAL: Registrar pago completo
-     */
+    
     public ResultadoOperacion registrarPagoCompleto(
             String clienteRUC,
             String descripcionPago,
@@ -49,10 +44,7 @@ public class CobranzaFacade {
             String tipoCalculo) {
         
         try {
-            System.out.println("\n══════════════════════════════════════");
-            System.out.println("  REGISTRANDO PAGO COMPLETO");
-            System.out.println("══════════════════════════════════════\n");
-            
+                     
             // 1. Buscar y validar cliente
             Cliente cliente = clienteService.buscarPorRUC(clienteRUC);
             if (cliente == null) {
@@ -154,9 +146,7 @@ public class CobranzaFacade {
         }
     }
     
-    //
-    // MÉTODOS DELEGADOS A SERVICIOS
-    //
+    
     
     public ResultadoOperacion registrarCliente(String ruc, String razonSocial, String telefono, double mensualidad) {
         Cliente cliente = new Cliente();
@@ -190,9 +180,7 @@ public class CobranzaFacade {
         return cliente != null ? cobranzaService.calcularTotalPagado(cliente.getID()) : 0.0;
     }
     
-    // 
-    // MÉTODO AUXILIAR
-    // 
+     
     
     private void configurarEstrategia (String tipo){
     switch (tipo.toUpperCase()){
@@ -209,9 +197,6 @@ public class CobranzaFacade {
             break;
     }
     }
-    //
-    // CLASE INTERNA
-    //
     
     public static class ResultadoOperacion {
         private boolean exito;
