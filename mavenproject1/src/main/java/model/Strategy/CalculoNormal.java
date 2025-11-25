@@ -20,9 +20,4 @@ public class CalculoNormal implements CalculoStrategy {
     public String obtenerDescripcion() {
         return "Pago normal - Sin descuentos ni recargos";
     }
-    
-    @Override
-    public String getTipo() {
-        return "NORMAL";
-    }
 }

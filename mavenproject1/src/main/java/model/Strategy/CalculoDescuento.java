@@ -8,24 +8,18 @@ import model.Cliente;
  *
  * @author Flavia
  */
-public class DescuentoPagoAdelantado implements CalculoStrategy {
+public class CalculoDescuento implements CalculoStrategy {
 private static final double PORCENTAJE_DESCUENTO = 0.05; // 5%
     
    @Override
     public double calcularMontoFinal(double montoBase, Cliente cliente) {
         double descuento = montoBase * PORCENTAJE_DESCUENTO;
         double montoFinal = montoBase - descuento;
-        
         return montoFinal;
     }
     
     @Override
     public String obtenerDescripcion() {
         return "Descuento por pago adelantado - 5% de descuento";
-    }
-    
-    @Override
-    public String getTipo() {
-        return "DESCUENTO_ADELANTADO";
     }
 }

@@ -17,8 +17,7 @@ import model.FacadeRecibos.FacadeRecibos;
 import vista.ReciboView;
 import model.Strategy.CalculoStrategy;
 import model.Strategy.CalculoNormal;
-import model.Strategy.DescuentoPagoAdelantado;
-import model.Strategy.RecargoMora;
+import model.Strategy.CalculoDescuento;
 import model.Strategy.ContextoCalculo;
 
 
@@ -62,72 +61,18 @@ public final class RegistroController {
         
      
         vistaRecibo.getBotonSinDescuento().addActionListener(e -> aplicarEstrategiaSinDescuento());
+        
         vistaRecibo.getBotonConDescuento().addActionListener(e -> aplicarEstrategiaConDescuento());
         
     }
     
      private void configurarStrategyInicial() {
-        
         vistaRecibo.getBotonSinDescuento().setSelected(true);
+        vistaRecibo.getBotonConDescuento().setSelected(false);
         aplicarEstrategiaSinDescuento();
     }
     
-    // MÉTODOS PARA MANEJAR LAS ESTRATEGIAS
-    private void aplicarEstrategiaSinDescuento() {
-        estrategiaActual = new CalculoNormal();
-        contextoCalculo.setEstrategia(estrategiaActual);
-        
-        
-        vistaRecibo.getBotonSinDescuento().setSelected(true);
-        vistaRecibo.getBotonConDescuento().setSelected(true);
-        
-        
-        JOptionPane.showMessageDialog(vistaRecibo, 
-            "Modo: Sin Descuento\nSe aplicará el monto sin modificaciones", 
-            "Estrategia Cambiada", 
-            JOptionPane.INFORMATION_MESSAGE);
-    }
-    
-    private void aplicarEstrategiaConDescuento() {
-        estrategiaActual = new DescuentoPagoAdelantado();
-        contextoCalculo.setEstrategia(estrategiaActual);
-        
-        // Actualizar interfaz
-        vistaRecibo.getBotonSinDescuento().setSelected(true);
-        vistaRecibo.getBotonConDescuento().setSelected(true);
-        
-        // Mostrar mensaje
-        JOptionPane.showMessageDialog(vistaRecibo, 
-            "Modo: Con Descuento\nSe aplicará 5% de descuento al monto base", 
-            "Estrategia Cambiada", 
-            JOptionPane.INFORMATION_MESSAGE);
-    }
-    
-    
-    private double aplicarStrategyAlMonto(double montoBase) {
-        try {
-            // Obtener cliente seleccionado para aplicar la estrategia
-            String nombreSeleccionado = (String) vistaRecibo.getBotonBusqueda().getSelectedItem();
-            if (nombreSeleccionado != null) {
-                Cliente cliente = facadeRecibos.buscarClientePorNombre(nombreSeleccionado);
-                if (cliente != null) {
-                    // Aplicar la estrategia seleccionada al monto
-                    double montoModificado = contextoCalculo.calcular(montoBase, cliente);
-                    
-                    return montoModificado;
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(vistaRecibo, 
-                "Error aplicando estrategia: " + e.getMessage(), 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-        }
-        
-        
-        return montoBase;
-    }
-    
+
     private void agregarConceptoPago() {
         try {
             
@@ -153,18 +98,12 @@ public final class RegistroController {
                 JOptionPane.showMessageDialog(vistaRecibo, "Seleccione un cliente primero");
                 return;
             }
-            
-            
-            double montoFinal = aplicarStrategyAlMonto(montoBase);
-            
-            
+             
             ConceptoPago concepto = new ConceptoPago();
             concepto.setDescripcion(descripcion);
-            concepto.setMetodoPago(metodoPago);
-            concepto.setMonto(montoFinal); // Usar monto modificado por la estrategia
             concepto.setFecha(new java.sql.Date(fecha.getTime()));
-            concepto.setTipoEstrategia(estrategiaActual.getTipo()); // Guardar tipo de estrategia
             concepto.setMontoBase(montoBase); // Guardar monto base para referencia
+            concepto.setMonto(montoBase);
             
             
             conceptosTemporales.add(concepto);
@@ -172,84 +111,22 @@ public final class RegistroController {
             limpiarFormularioConcepto();
             actualizarTotal();
             
-            mostrarConfirmacionConcepto(concepto, montoBase);
+            JOptionPane.showMessageDialog(vistaRecibo, "Concepto agregado: " + descripcion);
             
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(vistaRecibo, "Monto debe ser un número válido");
         }
     }
     
-    // MÉTODO NUEVO: Mostrar confirmación con detalles del concepto
-    private void mostrarConfirmacionConcepto(ConceptoPago concepto, double montoBase) {
-        double diferencia = concepto.getMonto() - montoBase;
-        String mensaje;
-        
-        if (diferencia < 0) {
-            mensaje = String.format(
-                "<html><b>Concepto agregado con DESCUENTO 5%%</b><br><br>" +
-                "Descripción: %s<br>" +
-                "Monto base: S/ %.2f<br>" +
-                "Descuento: S/ %.2f<br>" +
-                "<b>Monto final: S/ %.2f</b><br><br>" +
-                "<font color='green'>¡Ahorro para el cliente!</font></html>",
-                concepto.getDescripcion(),
-                montoBase,
-                Math.abs(diferencia),
-                concepto.getMonto()
-            );
-        } else {
-            mensaje = String.format(
-                "<html><b>Concepto agregado</b><br><br>" +
-                "Descripción: %s<br>" +
-                "Monto: S/ %.2f<br>" +
-                "Tipo: Pago normal</html>",
-                concepto.getDescripcion(),
-                concepto.getMonto()
-            );
-        }
-        
-        JOptionPane.showMessageDialog(vistaRecibo, mensaje, "Concepto Agregado", 
-                                    JOptionPane.INFORMATION_MESSAGE);
+    private void aplicarEstrategiaSinDescuento() {
+        facadeRecibos.setEstrategiaNormal();
+        actualizarTotal(); //Solo actualizar el TOTAL
     }
-    
-    // MÉTODO MODIFICADO: actualizarTablaConceptos (mostrar estrategia)
-    private void actualizarTablaConceptos() {
-        // Convertir lista de conceptos a TableModel
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("#");
-        model.addColumn("Descripción");
-        model.addColumn("Método Pago");
-        model.addColumn("Monto");
-        model.addColumn("Tipo"); // Nueva columna para mostrar la estrategia
-        
-        int contador = 1;
-        for (ConceptoPago concepto : conceptosTemporales) {
-            String tipoEstrategia = concepto.getTipoEstrategia() != null ? 
-                                  concepto.getTipoEstrategia() : "NORMAL";
-            
-            // Agregar icono según el tipo de estrategia
-            String tipoConIcono = tipoEstrategia.equals("DESCUENTO_ADELANTADO") ? 
-                                "✓ Con Descuento" : " Normal";
-            
-            model.addRow(new Object[]{
-                contador++,
-                concepto.getDescripcion(),
-                concepto.getMetodoPago(),
-                "S/ " + String.format("%,.2f", concepto.getMonto()),
-                tipoConIcono
-            });
-        }
-        
-        vistaRecibo.getTablaConceptos().setModel(model);
-    }
-    
-    
+  
     private void inicializarFormulario() {
         
         String numeroRecibo = facadeRecibos.generarNuevoNumeroRecibo();
-        vistaRecibo.getTxtNumeroRecibo().setText(numeroRecibo);
-        
-        
+        vistaRecibo.getTxtNumeroRecibo().setText(numeroRecibo);     
         cargarClientesEnComboBox();
     }
     
@@ -294,17 +171,18 @@ public final class RegistroController {
             // Eliminar de la lista temporal
             conceptosTemporales.remove(filaSeleccionada);
         
-            // Actualizar tabla y total
-            actualizarTablaConceptos();
+            // Actualizar  total
             actualizarTotal();
         
             JOptionPane.showMessageDialog(vistaRecibo, "Concepto eliminado");
         }
     }
     
-    private void actualizarTotal() {
+    private void actualizarTotal() 
+    {
         // 1. Calcular total usando el Facade
-        double total = facadeRecibos.calcularTotalConceptos(conceptosTemporales);
+        Cliente cliente = obtenerClienteSeleccionado();
+        double total = facadeRecibos.aplicarEstrategiaAlTotal(conceptosTemporales, cliente);
     
         // 2. Formatear y mostrar
         String totalFormateado = "S/ " + String.format("%,.2f", total);
@@ -316,6 +194,22 @@ public final class RegistroController {
         } else {
             vistaRecibo.getTxtTotal().setBackground(Color.WHITE);
         }
+    }
+    
+    private void aplicarEstrategiaConDescuento() 
+    {
+        facadeRecibos.setEstrategiaConDescuento();
+        actualizarTotal(); //Solo actualizar el TOTAL
+    }
+    
+
+    private Cliente obtenerClienteSeleccionado() 
+    {
+        String nombreSeleccionado = (String) vistaRecibo.getBotonBusqueda().getSelectedItem();
+        if (nombreSeleccionado != null) {
+            return facadeRecibos.buscarClientePorNombre(nombreSeleccionado);
+        }
+        return null;
     }
     
     private void limpiarFormularioConcepto() {
@@ -383,6 +277,28 @@ public final class RegistroController {
         // Resetear estrategia a Sin Descuento
         aplicarEstrategiaSinDescuento();
     }
+    
+    
+    private void actualizarTablaConceptos() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("#");
+        model.addColumn("Descripción");
+        model.addColumn("Fecha");
+        model.addColumn("Monto");
+    
+        int contador = 1;
+        for (ConceptoPago concepto : conceptosTemporales) {
+            model.addRow(new Object[]{
+                contador++,
+                concepto.getDescripcion(),
+                concepto.getFecha(),
+                "S/ " + String.format("%,.2f", concepto.getMonto()) // MONTO BASE
+            });
+        }
+    
+        vistaRecibo.getTablaConceptos().setModel(model);
+    }
+    
     
     private void cerrarVentana(){
         frameReportes.dispose();

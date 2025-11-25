@@ -19,18 +19,16 @@ public class ContextoCalculo {
     public ContextoCalculo() {
         this.estrategia = new CalculoNormal();
     }
-    
-    public ContextoCalculo(CalculoStrategy estrategia) {
+   
+    public void setEstrategia(CalculoStrategy estrategia){
         this.estrategia = estrategia;
-    }
-    
-    
-    public CalculoStrategy getEstrategia() {
-        return estrategia;
     }
     
     /**
      * Calcula el monto final usando la estrategia actual
+     * @param montoBase
+     * @param cliente
+     * @return 
      */
     public double calcular(double montoBase, Cliente cliente) {
         if (estrategia == null) {
@@ -41,14 +39,16 @@ public class ContextoCalculo {
     
     /**
      * Obtiene la descripción de la estrategia actual
+     * @return 
      */
     public String obtenerDescripcionEstrategia() {
-        return estrategia != null ? estrategia.obtenerDescripcion() : "Sin estrategia";
+        return estrategia.obtenerDescripcion();
     }
     
-public void setEstrategia(CalculoStrategy estrategia){
-    this.estrategia = estrategia;
-}
+    
+    public CalculoStrategy getEstrategia() {
+        return estrategia;
+    }
 }
 
     

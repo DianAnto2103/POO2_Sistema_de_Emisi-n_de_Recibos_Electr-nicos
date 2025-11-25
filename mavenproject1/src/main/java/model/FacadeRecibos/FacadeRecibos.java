@@ -9,11 +9,12 @@ package model.FacadeRecibos;
  * @author diana
  */
 import Repository.*;
-import model.Adapter.PDFAdapter;
 import java.util.List;
 import model.Cliente;
 import model.ConceptoPago;
-import model.Recibo;
+import model.Strategy.CalculoDescuento;
+import model.Strategy.CalculoNormal;
+import model.Strategy.ContextoCalculo;
 
 public class FacadeRecibos {
     private final GeneradorNumeracionService generadorNumeros;
@@ -22,8 +23,8 @@ public class FacadeRecibos {
     private final RepositorioCliente repoCliente;
     private final ValidadorConceptoService validadorConcepto;
     private final CalculadoraTotalService calculadoraTotal;
-    private final RepositorioConceptoPago repoConcepto;
     private final GeneracionRecibosService generadorPDF;
+    private final ContextoCalculo contextoCalculo;
     
     public FacadeRecibos() {
         this.generadorNumeros = new GeneradorNumeracionService();
@@ -32,8 +33,8 @@ public class FacadeRecibos {
         this.calculadoraTotal = new CalculadoraTotalService();
         this.repoRecibo = new RepositorioReciboImp();
         this.repoCliente = new RepositorioClienteImp();
-        this.repoConcepto = new RepositorioConceptoPagoImp();
         this.generadorPDF = new GeneracionRecibosService();
+        this.contextoCalculo = new ContextoCalculo();
         
     }
     
@@ -44,6 +45,27 @@ public class FacadeRecibos {
         
         // 2. Usar el servicio para generar el nuevo número
         return generadorNumeros.generarNumeroRecibo(ultimoNumero);
+    }
+    
+    //estrategia normaaal
+    public void setEstrategiaNormal() {
+        contextoCalculo.setEstrategia(new CalculoNormal());
+    }
+    
+    //estrategia con descuento
+    public void setEstrategiaConDescuento() {
+        contextoCalculo.setEstrategia(new CalculoDescuento());
+    }
+    
+    //"execute" estrategia
+    public double aplicarEstrategiaAlTotal(List<ConceptoPago> conceptos, Cliente cliente) {
+        double totalBase = calculadoraTotal.calcularTotal(conceptos);
+        return contextoCalculo.calcular(totalBase, cliente);
+    }
+    
+    //descripcion de la estrategia
+    public String getDescripcionEstrategiaActual() {
+        return contextoCalculo.obtenerDescripcionEstrategia();
     }
     
     //obtener nombre de clientes en lista
