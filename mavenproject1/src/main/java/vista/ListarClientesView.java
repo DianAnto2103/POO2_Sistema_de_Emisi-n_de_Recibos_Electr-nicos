@@ -146,14 +146,14 @@ public class ListarClientesView extends javax.swing.JPanel {
 
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "N.º", "RUC", "Razon social", "Telefono", "Mensualidad"
+                "RUC", "Razon social", "Telefono", "Mensualidad"
             }
         ));
         jScrollPane1.setViewportView(tablaClientes);

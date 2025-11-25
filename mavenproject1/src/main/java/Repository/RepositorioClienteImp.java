@@ -15,7 +15,7 @@ import model.Singleton.Singleton;
  * @author diana
  */
 public class RepositorioClienteImp implements RepositorioCliente {
-    private Connection connection;
+    private final Connection connection;
     
     public RepositorioClienteImp()
     {
@@ -221,7 +221,7 @@ public class RepositorioClienteImp implements RepositorioCliente {
     
     private Cliente mapearCliente(ResultSet resultado) throws SQLException 
     {
-        // Método privado auxiliar para mapear ResultSet a Cliente (EVITA REPETICIÓN)
+        // Método privado auxiliar para mapear ResultSet a Cliente 
         Cliente cliente = new Cliente();
         cliente.setID(resultado.getInt("id"));
         cliente.setRUC(resultado.getString("ruc"));

@@ -16,12 +16,11 @@ public class ConvertidorModelo {
     
     public static DefaultTableModel clientesATableModelo(List<Cliente> clientes)
     {
-        String[] columnNames = {"N°", "RUC", "Razón Social", "Teléfono", "Mensualidad"};
+        String[] columnNames = {"RUC", "Razón Social", "Teléfono", "Mensualidad"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         
         for (Cliente cliente : clientes) { //esto recorre cliente por cliente
             Object[] row = {
-                cliente.getID(),
                 cliente.getRUC(),
                 cliente.getRazonSocial(),
                 cliente.getTelefono(),
