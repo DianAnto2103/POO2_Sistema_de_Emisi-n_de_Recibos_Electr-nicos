@@ -25,9 +25,7 @@ public class ReciboService {
         this.repositorioRecibo = new RepositorioReciboImp();
     }
     
-    /**
-     * Generar nuevo recibo con número correlativo
-     */
+    
     public Recibo generarNuevoRecibo(Cliente cliente) {
         // Obtener el último número de recibo
         String ultimoNumero = repositorioRecibo.obtenerUltimoNumeroRecibo();
@@ -40,7 +38,6 @@ public class ReciboService {
         recibo.setTotal(0.0);
         recibo.setConceptos(new ArrayList<>());
         
-        System.out.println("✓ Recibo generado: " + nuevoNumero);
         return recibo;
     }
     
@@ -50,10 +47,8 @@ public class ReciboService {
     public boolean guardarRecibo(Recibo recibo) {
         try {
             repositorioRecibo.guardar(recibo);
-            System.out.println("✓ Recibo guardado: " + recibo.getNumeroRecibo());
             return true;
         } catch (Exception e) {
-            System.out.println("✗ Error al guardar recibo: " + e.getMessage());
             return false;
         }
     }
@@ -64,10 +59,8 @@ public class ReciboService {
     public boolean actualizarRecibo(Recibo recibo) {
         try {
             repositorioRecibo.actualizar(recibo);
-            System.out.println("✓ Recibo actualizado: " + recibo.getNumeroRecibo());
             return true;
         } catch (Exception e) {
-            System.out.println("✗ Error al actualizar recibo: " + e.getMessage());
             return false;
         }
     }
@@ -78,10 +71,8 @@ public class ReciboService {
     public boolean eliminarRecibo(Recibo recibo) {
         try {
             repositorioRecibo.eliminar(recibo);
-            System.out.println("✓ Recibo eliminado: " + recibo.getNumeroRecibo());
             return true;
         } catch (Exception e) {
-            System.out.println("✗ Error al eliminar recibo: " + e.getMessage());
             return false;
         }
     }
@@ -136,7 +127,6 @@ public class ReciboService {
         }
         recibo.getConceptos().add(concepto);
         recibo.setTotal(recibo.getTotal() + concepto.getMonto());
-        System.out.println("✓ Concepto agregado al recibo " + recibo.getNumeroRecibo());
     }
     
     /**
@@ -167,7 +157,7 @@ public class ReciboService {
                 return String.format("R-%03d", numero);
             }
         } catch (Exception e) {
-            System.out.println("⚠ Error al generar número, usando R-001");
+            // Si hay error, retornar número por defecto
         }
         return "R-001";
     }
