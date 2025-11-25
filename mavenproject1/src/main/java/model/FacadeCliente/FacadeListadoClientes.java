@@ -14,7 +14,7 @@ import model.Cliente;
  * @author diana
  */
 public class FacadeListadoClientes {
-    private RepositorioCliente repoCliente;
+    private final RepositorioCliente repoCliente;
     
     public FacadeListadoClientes() 
     {

@@ -19,7 +19,7 @@ public class PDFAdapter implements InterfacePDF {
     }
     
     @Override
-    public boolean generar(Recibo recibo, List<ConceptoPago> conceptos, String rutaDestino) {
-        return generadorPDF.generarPDF(recibo, conceptos, rutaDestino);
+    public boolean generar(Recibo recibo, List<ConceptoPago> conceptos, double totalBase, double totalConDescuento, String rutaDestino) {
+        return generadorPDF.generarPDF(recibo, conceptos, totalBase, totalConDescuento, rutaDestino);
     }
 }

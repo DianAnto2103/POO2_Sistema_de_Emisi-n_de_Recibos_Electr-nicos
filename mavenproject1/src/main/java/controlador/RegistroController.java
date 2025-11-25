@@ -246,38 +246,46 @@ public final class RegistroController {
                 JOptionPane.showMessageDialog(vistaRecibo, "Agregue al menos un concepto de pago");
                 return;
             }
-            
+
             // Validar que hay cliente seleccionado
             String rucCliente = vistaRecibo.getTxtRUC().getText();
             if (rucCliente.isEmpty()) {
                 JOptionPane.showMessageDialog(vistaRecibo, "Seleccione un cliente primero");
                 return;
             }
-            
-            // Llamar al facade para generar recibo completo y PDF
-            boolean exito = facadeRecibos.generarReciboCompleto(rucCliente, conceptosTemporales);
-            
+
+            // Calcular ambos totales
+            Cliente cliente = obtenerClienteSeleccionado();
+            double totalBase = facadeRecibos.calcularTotalConceptos(conceptosTemporales);
+            double totalConDescuento = facadeRecibos.aplicarEstrategiaAlTotal(conceptosTemporales, cliente);
+
+            // Llamar al facade para generar recibo completo y PDF con los totales
+            boolean exito = facadeRecibos.generarReciboCompleto(rucCliente, conceptosTemporales, totalBase, totalConDescuento);
+
             if (exito) {
-                JOptionPane.showMessageDialog(vistaRecibo, """
-                                                           Recibo guardado y PDF generado exitosamente!!!
-                                                           Archivo: recibos/Recibo-[NUMERO].pdf""");
-                
-                
+                String mensaje = "Recibo guardado y PDF generado exitosamente!\n" +
+                               "Archivo: recibos/Recibo-[NUMERO].pdf\n";
+
+                if (totalConDescuento < totalBase) {
+                    double descuento = totalBase - totalConDescuento;
+                    mensaje += "Descuento aplicado: S/ " + String.format("%,.2f", descuento);
+                }
+
+                JOptionPane.showMessageDialog(vistaRecibo, mensaje);
+
                 limpiarFormularioCompleto();
-                
+
             } else {
                 JOptionPane.showMessageDialog(vistaRecibo, 
                     "Error al generar el recibo", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } catch (HeadlessException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(vistaRecibo, 
                 "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    
     
     private void limpiarFormularioCompleto() {
         // Limpiar datos del cliente

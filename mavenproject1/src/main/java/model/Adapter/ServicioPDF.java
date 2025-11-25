@@ -20,8 +20,10 @@ import java.text.SimpleDateFormat;
  * @author diana
  */
 public class ServicioPDF {
-    
-    public boolean generarPDF(Recibo recibo, List<ConceptoPago> conceptos, String rutaDestino) {
+    public boolean generarPDF(Recibo recibo, List<ConceptoPago> conceptos, double totalBase, double totalConDescuento, 
+            String rutaDestino) 
+    {
+        
         Document document = new Document();
         
         try {
@@ -29,7 +31,6 @@ public class ServicioPDF {
             archivo.getParentFile().mkdirs();
             PdfWriter.getInstance(document, new FileOutputStream(rutaDestino));
             document.open();
-            
             
             // Título
             Font tituloFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
@@ -92,10 +93,27 @@ public class ServicioPDF {
             document.add(tablaConceptos);
             document.add(Chunk.NEWLINE);
             
-            // Total
+            //MOSTRAR DESCUENTO SI APLICA
+            if (totalConDescuento < totalBase) {
+                // Hay descuento aplicado
+                Paragraph subtotal = new Paragraph();
+                subtotal.add(new Chunk("Subtotal: ", boldFont));
+                subtotal.add(new Chunk("S/ " + String.format("%.2f", totalBase), normalFont));
+                subtotal.setAlignment(Element.ALIGN_RIGHT);
+                document.add(subtotal);
+                
+                double descuento = totalBase - totalConDescuento;
+                Paragraph descuentoLinea = new Paragraph();
+                descuentoLinea.add(new Chunk("Descuento aplicado: ", boldFont));
+                descuentoLinea.add(new Chunk("S/ " + String.format("%.2f", descuento), normalFont));
+                descuentoLinea.setAlignment(Element.ALIGN_RIGHT);
+                document.add(descuentoLinea);
+            }
+            
+            //TOTAL FINAL (CON O SIN DESCUENTO)
             Paragraph total = new Paragraph();
-            total.add(new Chunk("TOTAL: ", boldFont));
-            total.add(new Chunk("S/ " + String.format("%.2f", recibo.getTotal()), 
+            total.add(new Chunk("TOTAL A PAGAR: ", boldFont));
+            total.add(new Chunk("S/ " + String.format("%.2f", totalConDescuento), 
                 FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK)));
             total.setAlignment(Element.ALIGN_RIGHT);
             
@@ -111,6 +129,19 @@ public class ServicioPDF {
             }
             return false;
         }
+    }
+    
+    public boolean generarPDF(Recibo recibo, List<ConceptoPago> conceptos, String rutaDestino) {
+        double totalBase = calcularTotalBase(conceptos);
+        return generarPDF(recibo, conceptos, totalBase, totalBase, rutaDestino);
+    }
+    
+    private double calcularTotalBase(List<ConceptoPago> conceptos) {
+        double total = 0;
+        for (ConceptoPago concepto : conceptos) {
+            total += concepto.getMonto();
+        }
+        return total;
     }
     
     private PdfPCell crearCelda(String texto, Font font) {

@@ -12,5 +12,5 @@ import model.*;
  * @author diana
  */
 public interface InterfacePDF {
-    boolean generar(Recibo recibo, List<ConceptoPago> conceptos, String rutaDestino);
+    boolean generar(Recibo recibo, List<ConceptoPago> conceptos, double totalBase, double totalConDescuento, String rutaDestino);
 }

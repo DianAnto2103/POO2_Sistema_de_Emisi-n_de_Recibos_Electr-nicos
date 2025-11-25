@@ -29,17 +29,19 @@ public class GeneracionRecibosService {
     
     
     //Servicio que genera recibo completo + PDF
-    public boolean generarReciboCompleto(String rucCliente, List<ConceptoPago> conceptos) {
+    public boolean generarReciboCompleto(String rucCliente, List<ConceptoPago> conceptos, double totalBase, double totalConDescuento) {
         try {
             // 1. Buscar cliente
-            Cliente cliente = repoCliente.buscarPorRUC(rucCliente).get(0);
+            List<Cliente> clientes = repoCliente.buscarPorRUC(rucCliente);
+            if (clientes.isEmpty()) return false;
+            Cliente cliente = clientes.get(0);
             
             // 2. Generar y guardar recibo
-            Recibo recibo = crearYGuardarRecibo(cliente, conceptos);
+            Recibo recibo = crearYGuardarRecibo(cliente, conceptos, totalConDescuento);
             
             // 3. Generar PDF
             String rutaPDF = "recibos/Recibo-" + recibo.getNumeroRecibo() + ".pdf";
-            return pdfAdapter.generar(recibo, conceptos, rutaPDF);
+            return pdfAdapter.generar(recibo, conceptos, totalBase, totalConDescuento, rutaPDF);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,17 +50,15 @@ public class GeneracionRecibosService {
     }
     
     // Métodos privados de lógica...
-    private Recibo crearYGuardarRecibo(Cliente cliente, List<ConceptoPago> conceptos) {
+    private Recibo crearYGuardarRecibo(Cliente cliente, List<ConceptoPago> conceptos, double total) {
         String numeroRecibo = generarNumeroRecibo();
-        double total = calcularTotal(conceptos);
-        
+
         Recibo recibo = new Recibo();
         recibo.setNumeroRecibo(numeroRecibo);
         recibo.setCliente(cliente);
         recibo.setTotal(total);
-        
         recibo.setFechaEmision(new java.util.Date());
-        
+
         repoRecibo.guardar(recibo);
         return recibo;
     }
