@@ -27,9 +27,8 @@ public class GeneracionRecibosService {
         this.pdfAdapter = new PDFAdapter();
     }
     
-    /**
-     * Servicio que genera recibo completo + PDF
-     */
+    
+    //Servicio que genera recibo completo + PDF
     public boolean generarReciboCompleto(String rucCliente, List<ConceptoPago> conceptos) {
         try {
             // 1. Buscar cliente

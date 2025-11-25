@@ -14,11 +14,9 @@ import javax.swing.table.DefaultTableModel;
 import model.Cliente;
 import model.ConceptoPago;
 import model.FacadeRecibos.FacadeRecibos;
+import modelo.Factory.MetodoPagoFactory;
+import modelo.Factory.MetododePago;
 import vista.ReciboView;
-import model.Strategy.CalculoStrategy;
-import model.Strategy.CalculoNormal;
-import model.Strategy.CalculoDescuento;
-import model.Strategy.ContextoCalculo;
 
 
 /**
@@ -59,6 +57,10 @@ public final class RegistroController {
         
         vistaRecibo.getBotonConDescuento().addActionListener(e -> aplicarEstrategiaConDescuento());
         
+        vistaRecibo.getBotoNuevo().addActionListener(e -> limpiarFormularioCompleto());
+        
+        vistaRecibo.getBotonCancelar().addActionListener(e -> cerrarVentana());
+        
     }
     
      private void configurarStrategyInicial() {
@@ -71,13 +73,14 @@ public final class RegistroController {
     private void agregarConceptoPago() {
         try {
             
+            
             String descripcion = vistaRecibo.getTxtDescripcion().getText();
-            String metodoPago = (String) vistaRecibo.getComboMetodoPago().getSelectedItem();
+            String tipoMetodo = (String) vistaRecibo.getComboMetodoPago().getSelectedItem();
             double montoBase = Double.parseDouble(vistaRecibo.getTxtMonto().getText());
             Date fecha = vistaRecibo.getDate().getDate();
             
            
-            if (descripcion.isEmpty() || metodoPago == null || fecha == null) {
+            if (descripcion.isEmpty() || tipoMetodo == null || fecha == null) {
                 JOptionPane.showMessageDialog(vistaRecibo, "Todos los campos son obligatorios");
                 return;
             }
@@ -87,17 +90,25 @@ public final class RegistroController {
                 return;
             }
             
-            // 3. Validar que hay cliente seleccionado
+            // Validar que hay cliente seleccionado
             String nombreSeleccionado = (String) vistaRecibo.getBotonBusqueda().getSelectedItem();
             if (nombreSeleccionado == null) {
                 JOptionPane.showMessageDialog(vistaRecibo, "Seleccione un cliente primero");
                 return;
             }
+            
+            MetododePago metodoPago = MetodoPagoFactory.crearMetodoPago(tipoMetodo);
+            
+            if (!metodoPago.validarMonto(montoBase)) {
+                JOptionPane.showMessageDialog(vistaRecibo, 
+                "Monto no válido para " + metodoPago.getNombre());
+                return;
+            }
              
             ConceptoPago concepto = new ConceptoPago();
             concepto.setDescripcion(descripcion);
+            concepto.setMetodoPago(tipoMetodo);
             concepto.setFecha(new java.sql.Date(fecha.getTime()));
-            concepto.setMontoBase(montoBase); // Guardar monto base para referencia
             concepto.setMonto(montoBase);
             
             
@@ -114,6 +125,7 @@ public final class RegistroController {
     }
     
     private void aplicarEstrategiaSinDescuento() {
+        
         facadeRecibos.setEstrategiaNormal();
         actualizarTotal(); //Solo actualizar el TOTAL
     }
@@ -121,8 +133,19 @@ public final class RegistroController {
     private void inicializarFormulario() {
         
         String numeroRecibo = facadeRecibos.generarNuevoNumeroRecibo();
-        vistaRecibo.getTxtNumeroRecibo().setText(numeroRecibo);     
+        vistaRecibo.getTxtNumeroRecibo().setText(numeroRecibo);   
+        
+        
         cargarClientesEnComboBox();
+        configurarMetodosPago();
+    }
+    
+    private void configurarMetodosPago() {
+        vistaRecibo.getComboMetodoPago().removeAllItems();
+        List<String> metodos = MetodoPagoFactory.obtenerMetodosDisponibles();
+        for (String metodo : metodos) {
+            vistaRecibo.getComboMetodoPago().addItem(metodo);
+        }
     }
     
     private void cargarClientesEnComboBox() {
@@ -165,6 +188,8 @@ public final class RegistroController {
         if (confirmacion == JOptionPane.YES_OPTION) {
             // Eliminar de la lista temporal
             conceptosTemporales.remove(filaSeleccionada);
+            
+            actualizarTablaConceptos();
         
             // Actualizar  total
             actualizarTotal();
@@ -252,6 +277,8 @@ public final class RegistroController {
         }
     }
     
+    
+    
     private void limpiarFormularioCompleto() {
         // Limpiar datos del cliente
         vistaRecibo.getTxtCodigo().setText("");
@@ -276,7 +303,7 @@ public final class RegistroController {
     
     private void actualizarTablaConceptos() {
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("#");
+        model.addColumn("Cod");
         model.addColumn("Descripción");
         model.addColumn("Fecha");
         model.addColumn("Monto");

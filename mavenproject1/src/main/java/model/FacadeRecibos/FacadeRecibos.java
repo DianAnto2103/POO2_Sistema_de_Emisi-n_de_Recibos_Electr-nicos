@@ -92,7 +92,7 @@ public class FacadeRecibos {
     }
     
      public boolean superaLimiteTotal(double total) {
-        return calculadoraTotal.superaLimite(total, 10000.00); // HU5: S/ 10,000
+        return calculadoraTotal.superaLimite(total, 10000.00); 
     }
      
     public boolean generarReciboCompleto(String rucCliente, List<ConceptoPago> conceptos) {

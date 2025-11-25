@@ -9,6 +9,7 @@ package model.FacadeRecibos;
  * @author diana
  */
 public class GeneradorNumeracionService {
+    
     public String generarNumeroRecibo(String ultimoNumeroDeLaBD) {
         // 1. Calcular siguiente número
         int siguienteNumero = calcularSiguienteNumero(ultimoNumeroDeLaBD);

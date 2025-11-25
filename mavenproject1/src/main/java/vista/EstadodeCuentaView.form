@@ -179,9 +179,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textBuscar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="botonBuscar">
           <Properties>
@@ -491,9 +488,6 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="jTextField9">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -533,9 +527,6 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="jTextField11">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>

@@ -1,6 +1,8 @@
 package modelo.Factory;
 
 public interface MetododePago {
-    void procesarPago(double monto);
-    String getNombre();   // 
+    String getNombre();
+    String getDescripcion();
+    boolean validarMonto(double monto);
+    String generarComprobante();
 }

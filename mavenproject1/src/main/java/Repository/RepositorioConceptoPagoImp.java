@@ -76,7 +76,7 @@ public class RepositorioConceptoPagoImp implements RepositorioConceptoPago{
             for(ConceptoPago concepto : conceptos){
                 stmt.setString(1, concepto.getDescripcion());
                 stmt.setDouble(2, concepto.getMonto());
-                stmt.setString(3, concepto.getMetodoPago());
+                stmt.setString(3, concepto.getMetodoPago().getNombre());
                 stmt.setInt(4, concepto.getReciboID());
                 stmt.addBatch();
             }
@@ -97,7 +97,7 @@ public class RepositorioConceptoPagoImp implements RepositorioConceptoPago{
             
             stmt.setString(1, concepto.getDescripcion());
             stmt.setDouble(2, concepto.getMonto());
-            stmt.setString(3, concepto.getMetodoPago());
+            stmt.setString(3, concepto.getMetodoPago().getNombre());
             stmt.setInt(4, concepto.getReciboID());
             
             stmt.executeUpdate();
@@ -121,7 +121,7 @@ public class RepositorioConceptoPagoImp implements RepositorioConceptoPago{
          try (PreparedStatement stmt = connection.prepareStatement(sql)){
              stmt.setString(1, concepto.getDescripcion());
              stmt.setDouble(2, concepto.getMonto());
-             stmt.setString(3, concepto.getMetodoPago());
+             stmt.setString(3, concepto.getMetodoPago().getNombre());
              stmt.setInt(4, concepto.getCodigo());
              
              stmt.executeUpdate();

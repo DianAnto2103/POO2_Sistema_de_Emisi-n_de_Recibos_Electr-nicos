@@ -5,6 +5,8 @@
 package model;
 
 import java.sql.Date;
+import modelo.Factory.MetodoPagoFactory;
+import modelo.Factory.MetododePago;
 
 /**
  *
@@ -13,7 +15,7 @@ import java.sql.Date;
 public class ConceptoPago {
     private int codigo;
     private String descripcion;
-    private String metodoPago;
+    private MetododePago metodoPago;
     private Date fecha;
     private double monto;
     private int reciboID;
@@ -51,11 +53,15 @@ public class ConceptoPago {
         this.descripcion = descripcion;
     }
 
-    public String getMetodoPago() {
-        return metodoPago;
+    public MetododePago getMetodoPago() { 
+        return metodoPago; 
     }
 
-    public void setMetodoPago(String metodoPago) {
+    public void setMetodoPago(String tipoMetodo) {
+        this.metodoPago = MetodoPagoFactory.crearMetodoPago(tipoMetodo);
+    }
+    
+    public void setMetodoPago(MetododePago metodoPago) {
         this.metodoPago = metodoPago;
     }
 

@@ -1,14 +1,25 @@
 package modelo.Factory;
 
 public class PagoTransferencia implements MetododePago {
-
+    
     @Override
-    public void procesarPago(double monto) {
-        System.out.println("Pago por TRANSFERENCIA registrado: S/ " + monto);
+    public String getNombre() { 
+        return "TRANSFERENCIA"; 
     }
-
+    
     @Override
-    public String getNombre() {
-        return "Transferencia";
+    public String getDescripcion() { 
+        return "Transferencia bancaria"; 
+    }
+    
+    @Override
+    public boolean validarMonto(double monto) { 
+        return monto >= 1.0; 
+    } 
+    
+    @Override
+    public String generarComprobante() { 
+        return "Comprobante de transferencia"; 
     }
 }
+

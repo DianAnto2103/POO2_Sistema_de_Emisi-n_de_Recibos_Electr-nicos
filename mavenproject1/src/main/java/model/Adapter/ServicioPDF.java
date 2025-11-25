@@ -85,7 +85,7 @@ public class ServicioPDF {
             // Filas de conceptos
             for (ConceptoPago concepto : conceptos) {
                 tablaConceptos.addCell(crearCelda(concepto.getDescripcion(), normalFont));
-                tablaConceptos.addCell(crearCelda(concepto.getMetodoPago(), normalFont));
+                tablaConceptos.addCell(crearCelda(concepto.getMetodoPago().getNombre(), normalFont));
                 tablaConceptos.addCell(crearCelda("S/ " + String.format("%.2f", concepto.getMonto()), normalFont));
             }
             
