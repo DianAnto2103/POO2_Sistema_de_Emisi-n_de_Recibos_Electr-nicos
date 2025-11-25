@@ -17,6 +17,15 @@ public class ConceptoPago {
     private Date fecha;
     private double monto;
     private int reciboID;
+    private String tipoEstrategia;
+    
+    public String getTipoEstrategia() {
+        return tipoEstrategia;
+    }
+    
+    public void setTipoEstrategia(String tipoEstrategia) {
+        this.tipoEstrategia = tipoEstrategia;
+    }
     
     public int getCodigo() {
         return codigo;

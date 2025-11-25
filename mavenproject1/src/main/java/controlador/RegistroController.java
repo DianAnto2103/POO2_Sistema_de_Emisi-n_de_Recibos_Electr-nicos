@@ -15,25 +15,61 @@ import model.Cliente;
 import model.ConceptoPago;
 import model.FacadeRecibos.FacadeRecibos;
 import vista.ReciboView;
+import model.Strategy.CalculoStrategy;
+import model.Strategy.CalculoNormal;
+import model.Strategy.DescuentoPagoAdelantado;
+import model.Strategy.RecargoMora;
+import model.Strategy.ContextoCalculo;
+
 
 /**
  *
- * @author diana
+ * @author diana y Flavia
  */
 public final class RegistroController {
     private final JFrame frameReportes;
     private final ReciboView vistaRecibo;
     private final FacadeRecibos facadeRecibos;
     private final List<ConceptoPago> conceptosTemporales;
+    private final ContextoCalculo estrategiaActual;
+    private CalculoStrategy estrategiaActual;
+    
+    private JButton btnNormal;
+    private JButton btnDescuento;
+    private JButton btnRecargo;
+    private JLabel lblEstrategia;
     
     public RegistroController(JFrame frameReportes){
         this.frameReportes = frameReportes;
         this.vistaRecibo = new ReciboView();
         this.facadeRecibos = new FacadeRecibos();
         this.conceptosTemporales = new ArrayList<>();
+        this.contextoCalculo = new ContextoCalculo(); // Inicializar Strategy
+        this.estrategiaActual = new CalculoNormal(); // Estrategia por defecto
+        
+        configurarComponentesStrategy();
         configurarEventos();
         inicializarFormulario();
+    }
+    
+    // NUEVO MÉTODO: Configurar componentes del Strategy
+    private void configurarComponentesStrategy() {
+        // Crear botones para las estrategias
+        btnNormal = new JButton("Pago Normal");
+        btnDescuento = new JButton("Descuento 5%");
+        btnRecargo = new JButton("Recargo 15%");
+        lblEstrategia = new JLabel("Estrategia: Pago Normal");
         
+        // Estilos para los botones
+        btnNormal.setBackground(new Color(200, 200, 200));
+        btnDescuento.setBackground(new Color(144, 238, 144)); // Verde claro
+        btnRecargo.setBackground(new Color(255, 182, 193));   // Rosa claro
+        
+        lblEstrategia.setForeground(Color.BLUE);
+        lblEstrategia.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        
+        // Agregar a la vista
+        vistaRecibo.agregarComponentesStrategy(btnNormal, btnDescuento, btnRecargo, lblEstrategia);
     }
     
     public void configurarEventos(){
@@ -48,8 +84,166 @@ public final class RegistroController {
         vistaRecibo.getBotonBorrar().addActionListener(e -> eliminarConcepto());
         
         vistaRecibo.getBotonGuardarPDF().addActionListener(e -> generarPDFRecibo());
+        
+        // NUEVOS EVENTOS PARA STRATEGY
+        btnNormal.addActionListener(e -> aplicarEstrategiaNormal());
+        btnDescuento.addActionListener(e -> aplicarEstrategiaDescuento());
+        btnRecargo.addActionListener(e -> aplicarEstrategiaRecargo());
     }
     
+    // NUEVOS MÉTODOS PARA MANEJAR LAS ESTRATEGIAS
+    private void aplicarEstrategiaNormal() {
+        estrategiaActual = new CalculoNormal();
+        contextoCalculo.setEstrategia(estrategiaActual);
+        lblEstrategia.setText("Estrategia: Pago Normal");
+        lblEstrategia.setForeground(Color.BLUE);
+        JOptionPane.showMessageDialog(vistaRecibo, 
+            "Modo: Pago Normal\nSin descuentos ni recargos", 
+            "Estrategia Cambiada", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void aplicarEstrategiaDescuento() {
+        estrategiaActual = new DescuentoPagoAdelantado();
+        contextoCalculo.setEstrategia(estrategiaActual);
+        lblEstrategia.setText("Estrategia: Descuento 5% por Pago Adelantado");
+        lblEstrategia.setForeground(Color.GREEN.darker());
+        JOptionPane.showMessageDialog(vistaRecibo, 
+            "Modo: Descuento 5%\nAplicado por pago adelantado", 
+            "Estrategia Cambiada", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void aplicarEstrategiaRecargo() {
+        estrategiaActual = new RecargoMora();
+        contextoCalculo.setEstrategia(estrategiaActual);
+        lblEstrategia.setText("Estrategia: Recargo 15% por Mora");
+        lblEstrategia.setForeground(Color.RED);
+        JOptionPane.showMessageDialog(vistaRecibo, 
+            "Modo: Recargo 15%\nAplicado por pago en mora", 
+            "Estrategia Cambiada", 
+            JOptionPane.WARNING_MESSAGE);
+    }
+    
+    // MÉTODO MODIFICADO: aplicarStrategyAlMonto
+    private double aplicarStrategyAlMonto(double montoBase) {
+        try {
+            // Obtener cliente seleccionado para aplicar la estrategia
+            String nombreSeleccionado = (String) vistaRecibo.getBotonBusqueda().getSelectedItem();
+            if (nombreSeleccionado != null) {
+                Cliente cliente = facadeRecibos.buscarClientePorNombre(nombreSeleccionado);
+                if (cliente != null) {
+                    // Aplicar la estrategia seleccionada al monto
+                    double montoModificado = contextoCalculo.calcular(montoBase, cliente);
+                    
+                    // Mostrar información del cálculo aplicado
+                    mostrarInfoCalculo(montoBase, montoModificado);
+                    
+                    return montoModificado;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error aplicando estrategia: " + e.getMessage());
+        }
+        
+        // Si hay error, retornar monto base sin cambios
+        return montoBase;
+    }
+    
+    // MÉTODO NUEVO: Mostrar información del cálculo aplicado
+    private void mostrarInfoCalculo(double montoBase, double montoModificado) {
+        double diferencia = montoModificado - montoBase;
+        String mensaje;
+        
+        if (diferencia < 0) {
+            mensaje = String.format(
+                "✓ DESCUENTO APLICADO\nMonto base: S/ %.2f\nDescuento: S/ %.2f\nMonto final: S/ %.2f",
+                montoBase, Math.abs(diferencia), montoModificado
+            );
+        } else if (diferencia > 0) {
+            mensaje = String.format(
+                "⚠ RECARGO APLICADO\nMonto base: S/ %.2f\nRecargo: S/ %.2f\nMonto final: S/ %.2f",
+                montoBase, diferencia, montoModificado
+            );
+        } else {
+            mensaje = String.format(
+                "● PAGO NORMAL\nMonto: S/ %.2f\nSin ajustes aplicados",
+                montoBase
+            );
+        }
+        
+        // Mostrar en consola para debugging
+        System.out.println("=== APLICACIÓN DE ESTRATEGIA ===");
+        System.out.println(mensaje);
+        System.out.println("Estrategia: " + estrategiaActual.obtenerDescripcion());
+        System.out.println("=================================");
+    }
+    
+    // MÉTODO MODIFICADO: agregarConceptoPago (INTEGRAR STRATEGY)
+    private void agregarConceptoPago() {
+        try {
+            // 1. Obtener datos del formulario
+            String descripcion = vistaRecibo.getTxtDescripcion().getText();
+            String metodoPago = (String) vistaRecibo.getComboMetodoPago().getSelectedItem();
+            double montoBase = Double.parseDouble(vistaRecibo.getTxtMonto().getText());
+            Date fecha = vistaRecibo.getDate().getDate();
+            
+            // 2. Validar campos obligatorios
+            if (descripcion.isEmpty() || metodoPago == null || fecha == null) {
+                JOptionPane.showMessageDialog(vistaRecibo, "Todos los campos son obligatorios");
+                return;
+            }
+            
+            // 3. APLICAR STRATEGIA AL MONTO
+            double montoFinal = aplicarStrategyAlMonto(montoBase);
+            
+            // 4. Crear objeto ConceptoPago con el monto modificado
+            ConceptoPago concepto = new ConceptoPago();
+            concepto.setDescripcion(descripcion + " [" + estrategiaActual.getTipo() + "]");
+            concepto.setMetodoPago(metodoPago);
+            concepto.setMonto(montoFinal); // Usar monto modificado por la estrategia
+            concepto.setFecha(new java.sql.Date(fecha.getTime()));
+            concepto.setTipoEstrategia(estrategiaActual.getTipo()); // Guardar tipo de estrategia
+            
+            // 5. Agregar a lista temporal
+            conceptosTemporales.add(concepto);
+            actualizarTablaConceptos();
+            limpiarFormularioConcepto();
+            actualizarTotal();
+            
+            JOptionPane.showMessageDialog(vistaRecibo, 
+                "Concepto agregado con " + estrategiaActual.obtenerDescripcion());
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(vistaRecibo, "Monto debe ser un número válido");
+        }
+    }
+    
+    // MÉTODO MODIFICADO: actualizarTablaConceptos (mostrar estrategia)
+    private void actualizarTablaConceptos() {
+        // Convertir lista de conceptos a TableModel
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Descripción");
+        model.addColumn("Método Pago");
+        model.addColumn("Monto");
+        model.addColumn("Tipo"); // Nueva columna para mostrar la estrategia
+        
+        for (ConceptoPago concepto : conceptosTemporales) {
+            String tipoEstrategia = concepto.getTipoEstrategia() != null ? 
+                                  concepto.getTipoEstrategia() : "NORMAL";
+            
+            model.addRow(new Object[]{
+                concepto.getDescripcion(),
+                concepto.getMetodoPago(),
+                "S/ " + String.format("%,.2f", concepto.getMonto()),
+                tipoEstrategia
+            });
+        }
+        
+        vistaRecibo.getTablaConceptos().setModel(model);
+    }
+    
+    // EL RESTO DE TUS MÉTODOS PERMANECEN IGUAL...
     private void inicializarFormulario() {
         // 1. Generar número de recibo
         String numeroRecibo = facadeRecibos.generarNuevoNumeroRecibo();
@@ -82,40 +276,6 @@ public final class RegistroController {
         }
     }
     
-    private void agregarConceptoPago() {
-        try {
-            // 1. Obtener datos del formulario
-            String descripcion = vistaRecibo.getTxtDescripcion().getText();
-            String metodoPago = (String) vistaRecibo.getComboMetodoPago().getSelectedItem();
-            double monto = Double.parseDouble(vistaRecibo.getTxtMonto().getText());
-            Date fecha = vistaRecibo.getDate().getDate();
-            
-            // 2. Validar campos obligatorios
-            if (descripcion.isEmpty() || metodoPago == null || fecha == null) {
-                JOptionPane.showMessageDialog(vistaRecibo, "Todos los campos son obligatorios");
-                return;
-            }
-            
-            // 3. Crear objeto ConceptoPago 
-            ConceptoPago concepto = new ConceptoPago();
-            concepto.setDescripcion(descripcion);
-            concepto.setMetodoPago(metodoPago);
-            concepto.setMonto(monto);
-            concepto.setFecha(new java.sql.Date(fecha.getTime()));
-            
-            // 4. Agregar a lista temporal
-            conceptosTemporales.add(concepto);
-            actualizarTablaConceptos();
-            limpiarFormularioConcepto();
-            actualizarTotal();
-            
-            JOptionPane.showMessageDialog(vistaRecibo, "Concepto agregado");
-            
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(vistaRecibo, "Monto debe ser un número válido");
-        }
-    }
-    
     private void eliminarConcepto() {
         int filaSeleccionada = vistaRecibo.getTablaConceptos().getSelectedRow();
     
@@ -139,8 +299,8 @@ public final class RegistroController {
             actualizarTotal();
         
             JOptionPane.showMessageDialog(vistaRecibo, "Concepto eliminado");
+        }
     }
-}
     
     private void actualizarTotal() {
         // 1. Calcular total usando el Facade
@@ -156,24 +316,6 @@ public final class RegistroController {
         } else {
             vistaRecibo.getTxtTotal().setBackground(Color.WHITE);
         }
-    }
-    
-    private void actualizarTablaConceptos() {
-        // Convertir lista de conceptos a TableModel
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Descripción");
-        model.addColumn("Método Pago");
-        model.addColumn("Monto");
-        
-        for (ConceptoPago concepto : conceptosTemporales) {
-            model.addRow(new Object[]{
-                concepto.getDescripcion(),
-                concepto.getMetodoPago(),
-                "S/ " + concepto.getMonto()
-            });
-        }
-        
-        vistaRecibo.getTablaConceptos().setModel(model);
     }
     
     private void limpiarFormularioConcepto() {
@@ -237,13 +379,14 @@ public final class RegistroController {
         // Generar nuevo número de recibo para el siguiente
         String nuevoNumero = facadeRecibos.generarNuevoNumeroRecibo();
         vistaRecibo.getTxtNumeroRecibo().setText(nuevoNumero);
+        
+        // Resetear estrategia a Normal
+        aplicarEstrategiaNormal();
     }
-    
     
     private void cerrarVentana(){
         frameReportes.dispose();
     }
-    
     
     public ReciboView getVistaRegistro(){
         return vistaRecibo;
