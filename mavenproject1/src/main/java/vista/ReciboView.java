@@ -71,6 +71,8 @@ public class ReciboView extends javax.swing.JPanel {
         botonGuardarPDF = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        botonConDescuento = new javax.swing.JRadioButton();
+        botonSinDescuento = new javax.swing.JRadioButton();
 
         jLabel19.setText("jLabel19");
 
@@ -446,6 +448,10 @@ public class ReciboView extends javax.swing.JPanel {
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
+        botonConDescuento.setText("Con Descuento");
+
+        botonSinDescuento.setText("Sin Descuento");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -481,6 +487,10 @@ public class ReciboView extends javax.swing.JPanel {
                                 .addComponent(botonGuardarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(32, 32, 32)
                                 .addComponent(botonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(botonConDescuento)
+                                .addGap(18, 18, 18)
+                                .addComponent(botonSinDescuento)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -519,7 +529,9 @@ public class ReciboView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonConDescuento)
+                        .addComponent(botonSinDescuento))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botonGuardarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(botoNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -599,8 +611,10 @@ public class ReciboView extends javax.swing.JPanel {
     private javax.swing.JButton botonBorrar;
     private javax.swing.JComboBox<String> botonBusqueda;
     private javax.swing.JButton botonCancelar;
+    private javax.swing.JRadioButton botonConDescuento;
     private javax.swing.JButton botonGuardarPDF;
     private javax.swing.JButton botonSalir;
+    private javax.swing.JRadioButton botonSinDescuento;
     private com.toedter.calendar.JDateChooser date;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;

@@ -67,6 +67,10 @@
                               <Component id="botonGuardarPDF" min="-2" pref="147" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="botonSalir" min="-2" pref="147" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="botonConDescuento" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="botonSinDescuento" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -119,6 +123,8 @@
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="jLabel15" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="jTextField1" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="botonConDescuento" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="botonSinDescuento" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="botonGuardarPDF" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
@@ -790,6 +796,16 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="botonConDescuento">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Con Descuento"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="botonSinDescuento">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sin Descuento"/>
       </Properties>
     </Component>
   </SubComponents>
