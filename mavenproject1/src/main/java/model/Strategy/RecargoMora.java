@@ -16,17 +16,6 @@ public class RecargoMora implements CalculoStrategy {
     public double calcularMontoFinal(double montoBase, Cliente cliente) {
         double recargo = montoBase * PORCENTAJE_RECARGO;
         double montoFinal = montoBase + recargo;
-        
-        System.out.println("═══════════════════════════════════════════");
-        System.out.println("   RECARGO POR MORA");
-        System.out.println("═══════════════════════════════════════════");
-        System.out.println(String.format("  Cliente: %s", cliente.getRazonSocial()));
-        System.out.println(String.format("  Monto base: S/ %.2f", montoBase));
-        System.out.println(String.format("  Recargo (10%%): S/ %.2f", recargo));
-        System.out.println(String.format("  Monto final: S/ %.2f", montoFinal));
-        System.out.println("  ATENCIÓN: Pago con atraso");
-        System.out.println("═══════════════════════════════════════════\n");
-        
         return montoFinal;
     }
     
