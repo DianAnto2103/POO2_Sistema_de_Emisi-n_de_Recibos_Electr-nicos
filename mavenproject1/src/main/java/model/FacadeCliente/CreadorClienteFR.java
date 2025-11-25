@@ -14,7 +14,7 @@ import model.Cliente;
 public class CreadorClienteFR {
     public boolean crearYGuardar(RepositorioCliente reposi, String ruc, String razonSocial, String telefono, double mensualidad) 
     {
-        // Crea una nueva instancia de Cliente  
+        // Crea una nueva instancia de Cliente 
         Cliente cliente = new Cliente();
         // Asigna todos los datos recibidos del formulario
         cliente.setRUC(ruc);
@@ -24,7 +24,7 @@ public class CreadorClienteFR {
         // Establece valores por defecto como 'activo = true'
         cliente.setActivo(true);
         
-        // Finalmente guarda el cliente en la base de datos
+        // Finalmente guarda el cliente en la Base de Datos
         reposi.guardar(cliente);
         return true;
     }

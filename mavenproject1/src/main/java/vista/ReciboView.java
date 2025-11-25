@@ -669,6 +669,12 @@ public class ReciboView extends javax.swing.JPanel {
         this.TxtTelefono.setText(TxtTelefono);
     }
     
+    public javax.swing.JRadioButton getBotonConDescuento() {
+        return botonConDescuento;
+    }
+    public javax.swing.JRadioButton getBotonSinDescuento() {
+    return botonSinDescuento;
+    }
     
     public JTextField getTxtCodigo() {
         return TxtCodigo;
@@ -693,6 +699,7 @@ public class ReciboView extends javax.swing.JPanel {
     public JTextField getTxtNumeroRecibo() {
         return TxtNumeroRecibo;
     }
+    
     
     public JButton getBotoNuevo() {
         return botoNuevo;
@@ -749,6 +756,7 @@ public class ReciboView extends javax.swing.JPanel {
     public void setTxtDescripcion(String descripcion) {
         this.TxtDescripcion.setText(descripcion);
     }
+    
 
     public void setTxtMonto(String monto) {
         this.TxtMonto.setText(monto);
