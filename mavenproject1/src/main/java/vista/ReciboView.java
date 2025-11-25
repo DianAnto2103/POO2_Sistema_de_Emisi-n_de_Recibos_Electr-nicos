@@ -68,7 +68,7 @@ public class ReciboView extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         botonSalir = new javax.swing.JButton();
         botoNuevo = new javax.swing.JButton();
-        botonGuardar = new javax.swing.JButton();
+        botonGuardarPDF = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
@@ -268,7 +268,6 @@ public class ReciboView extends javax.swing.JPanel {
         jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel14.setText("Monto");
 
-        TxtMonto.setText("jTextField2");
         TxtMonto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TxtMontoActionPerformed(evt);
@@ -332,7 +331,6 @@ public class ReciboView extends javax.swing.JPanel {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboMetodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(TxtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -433,13 +431,13 @@ public class ReciboView extends javax.swing.JPanel {
             }
         });
 
-        botonGuardar.setBackground(new java.awt.Color(232, 230, 230));
-        botonGuardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        botonGuardar.setText("Guardar PDF");
-        botonGuardar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
+        botonGuardarPDF.setBackground(new java.awt.Color(232, 230, 230));
+        botonGuardarPDF.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        botonGuardarPDF.setText("Guardar PDF");
+        botonGuardarPDF.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        botonGuardarPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonGuardarActionPerformed(evt);
+                botonGuardarPDFActionPerformed(evt);
             }
         });
 
@@ -480,7 +478,7 @@ public class ReciboView extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(botoNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(35, 35, 35)
-                                .addComponent(botonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(botonGuardarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(32, 32, 32)
                                 .addComponent(botonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -523,7 +521,7 @@ public class ReciboView extends javax.swing.JPanel {
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonGuardarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(botoNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(botonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -546,9 +544,9 @@ public class ReciboView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_botoNuevoActionPerformed
 
-    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+    private void botonGuardarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarPDFActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botonGuardarActionPerformed
+    }//GEN-LAST:event_botonGuardarPDFActionPerformed
 
     private void TxtMensualidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtMensualidadActionPerformed
         // TODO add your handling code here:
@@ -601,7 +599,7 @@ public class ReciboView extends javax.swing.JPanel {
     private javax.swing.JButton botonBorrar;
     private javax.swing.JComboBox<String> botonBusqueda;
     private javax.swing.JButton botonCancelar;
-    private javax.swing.JButton botonGuardar;
+    private javax.swing.JButton botonGuardarPDF;
     private javax.swing.JButton botonSalir;
     private com.toedter.calendar.JDateChooser date;
     private com.toedter.calendar.JDateChooser jDateChooser2;
@@ -702,8 +700,8 @@ public class ReciboView extends javax.swing.JPanel {
         return botonCancelar;
     }
 
-    public JButton getBotonGuardar() {
-        return botonGuardar;
+    public JButton getBotonGuardarPDF() {
+        return botonGuardarPDF;
     }
 
     public JButton getBotonSalir() {

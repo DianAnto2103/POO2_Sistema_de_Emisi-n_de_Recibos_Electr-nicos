@@ -9,9 +9,11 @@ package model.FacadeRecibos;
  * @author diana
  */
 import Repository.*;
+import model.Adapter.PDFAdapter;
 import java.util.List;
 import model.Cliente;
 import model.ConceptoPago;
+import model.Recibo;
 
 public class FacadeRecibos {
     private final GeneradorNumeracionService generadorNumeros;
@@ -20,14 +22,19 @@ public class FacadeRecibos {
     private final RepositorioCliente repoCliente;
     private final ValidadorConceptoService validadorConcepto;
     private final CalculadoraTotalService calculadoraTotal;
+    private final RepositorioConceptoPago repoConcepto;
+    private final GeneracionRecibosService generadorPDF;
     
     public FacadeRecibos() {
         this.generadorNumeros = new GeneradorNumeracionService();
         this.busquedaCliente = new BusquedaClienteService();
-        this.repoRecibo = new RepositorioReciboImp();
-        this.repoCliente = new RepositorioClienteImp();
         this.validadorConcepto = new ValidadorConceptoService();
         this.calculadoraTotal = new CalculadoraTotalService();
+        this.repoRecibo = new RepositorioReciboImp();
+        this.repoCliente = new RepositorioClienteImp();
+        this.repoConcepto = new RepositorioConceptoPagoImp();
+        this.generadorPDF = new GeneracionRecibosService();
+        
     }
     
     //generar numero recibo nuevo
@@ -64,5 +71,9 @@ public class FacadeRecibos {
     
      public boolean superaLimiteTotal(double total) {
         return calculadoraTotal.superaLimite(total, 10000.00); // HU5: S/ 10,000
+    }
+     
+    public boolean generarReciboCompleto(String rucCliente, List<ConceptoPago> conceptos) {
+        return generadorPDF.generarReciboCompleto(rucCliente, conceptos);
     }
 }

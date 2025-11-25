@@ -64,7 +64,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="botoNuevo" min="-2" pref="147" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                              <Component id="botonGuardar" min="-2" pref="147" max="-2" attributes="0"/>
+                              <Component id="botonGuardarPDF" min="-2" pref="147" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="botonSalir" min="-2" pref="147" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
@@ -121,7 +121,7 @@
                       <Component id="jTextField1" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="botonGuardar" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="botonGuardarPDF" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
                       <Component id="botoNuevo" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
                       <Component id="botonSalir" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
                   </Group>
@@ -506,7 +506,6 @@
                       <Component id="jLabel8" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="ComboMetodoPago" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="TxtMonto" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -551,9 +550,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="TxtMonto">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtMontoActionPerformed"/>
           </Events>
@@ -762,7 +758,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botoNuevoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="botonGuardar">
+    <Component class="javax.swing.JButton" name="botonGuardarPDF">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="e6" green="e6" red="e8" type="rgb"/>
@@ -778,7 +774,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonGuardarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonGuardarPDFActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel15">

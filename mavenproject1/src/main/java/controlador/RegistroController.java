@@ -5,6 +5,7 @@
 package controlador;
 
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,6 +44,10 @@ public final class RegistroController {
         vistaRecibo.getBotonBusqueda().addActionListener(e -> autocompletarDatosCliente());
         
         vistaRecibo.getBotonAgregar().addActionListener(e -> agregarConceptoPago());
+        
+        vistaRecibo.getBotonBorrar().addActionListener(e -> eliminarConcepto());
+        
+        vistaRecibo.getBotonGuardarPDF().addActionListener(e -> generarPDFRecibo());
     }
     
     private void inicializarFormulario() {
@@ -91,14 +96,14 @@ public final class RegistroController {
                 return;
             }
             
-            // 3. Crear objeto ConceptoPago - CORRECCIÓN AQUÍ
+            // 3. Crear objeto ConceptoPago 
             ConceptoPago concepto = new ConceptoPago();
             concepto.setDescripcion(descripcion);
             concepto.setMetodoPago(metodoPago);
             concepto.setMonto(monto);
-            concepto.setFecha(new java.sql.Date(fecha.getTime())); // ✅ Corrección
+            concepto.setFecha(new java.sql.Date(fecha.getTime()));
             
-            // 4. Agregar a lista temporal (por ahora sin validación del Facade)
+            // 4. Agregar a lista temporal
             conceptosTemporales.add(concepto);
             actualizarTablaConceptos();
             limpiarFormularioConcepto();
@@ -111,15 +116,41 @@ public final class RegistroController {
         }
     }
     
+    private void eliminarConcepto() {
+        int filaSeleccionada = vistaRecibo.getTablaConceptos().getSelectedRow();
+    
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(vistaRecibo, "Seleccione un concepto para eliminar");
+            return;
+        }
+        // Confirmar eliminación
+        int confirmacion = JOptionPane.showConfirmDialog(
+            vistaRecibo, 
+            "¿Está seguro de eliminar este concepto?", 
+            "Confirmar eliminación", 
+            JOptionPane.YES_NO_OPTION
+        );
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            // Eliminar de la lista temporal
+            conceptosTemporales.remove(filaSeleccionada);
+        
+            // Actualizar tabla y total
+            actualizarTablaConceptos();
+            actualizarTotal();
+        
+            JOptionPane.showMessageDialog(vistaRecibo, "Concepto eliminado");
+    }
+}
+    
     private void actualizarTotal() {
-    // 1. Calcular total usando el Facade
+        // 1. Calcular total usando el Facade
         double total = facadeRecibos.calcularTotalConceptos(conceptosTemporales);
     
-    // 2. Formatear y mostrar
+        // 2. Formatear y mostrar
         String totalFormateado = "S/ " + String.format("%,.2f", total);
         vistaRecibo.getTxtTotal().setText(totalFormateado);
     
-    // 3. Resaltar si supera S/ 10,000 (HU5)
+        // 3. Resaltar si supera S/ 10,000 (HU5)
         if (total > 10000.00) {
             vistaRecibo.getTxtTotal().setBackground(Color.YELLOW);
         } else {
@@ -150,6 +181,62 @@ public final class RegistroController {
         vistaRecibo.getTxtMonto().setText("");
         vistaRecibo.getComboMetodoPago().setSelectedIndex(0);
         vistaRecibo.getDate().setDate(new Date()); // Fecha actual
+    }
+    
+    private void generarPDFRecibo() {
+        try {
+            // Validar que hay conceptos agregados
+            if (conceptosTemporales.isEmpty()) {
+                JOptionPane.showMessageDialog(vistaRecibo, "Agregue al menos un concepto de pago");
+                return;
+            }
+            
+            // Validar que hay cliente seleccionado
+            String rucCliente = vistaRecibo.getTxtRUC().getText();
+            if (rucCliente.isEmpty()) {
+                JOptionPane.showMessageDialog(vistaRecibo, "Seleccione un cliente primero");
+                return;
+            }
+            
+            // Llamar al facade para generar recibo completo y PDF
+            boolean exito = facadeRecibos.generarReciboCompleto(rucCliente, conceptosTemporales);
+            
+            if (exito) {
+                JOptionPane.showMessageDialog(vistaRecibo, """
+                                                           Recibo guardado yy PDF generado exitosamente!!!
+                                                           Archivo: recibos/Recibo-[NUMERO].pdf""");
+                
+                // Limpiar formulario para nuevo recibo
+                limpiarFormularioCompleto();
+                
+            } else {
+                JOptionPane.showMessageDialog(vistaRecibo, 
+                    "Error al generar el recibo", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } catch (HeadlessException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(vistaRecibo, 
+                "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void limpiarFormularioCompleto() {
+        // Limpiar datos del cliente
+        vistaRecibo.getTxtCodigo().setText("");
+        vistaRecibo.getTxtRUC().setText("");
+        vistaRecibo.getTxtRazonSocial().setText("");
+        vistaRecibo.getTxtTelefono().setText("");
+        vistaRecibo.getTxtMensualidad().setText("");
+    
+        // Limpiar lista de conceptos y tabla
+        conceptosTemporales.clear();
+        actualizarTablaConceptos();
+        actualizarTotal();
+    
+        // Generar nuevo número de recibo para el siguiente
+        String nuevoNumero = facadeRecibos.generarNuevoNumeroRecibo();
+        vistaRecibo.getTxtNumeroRecibo().setText(nuevoNumero);
     }
     
     
