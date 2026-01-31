@@ -41,6 +41,7 @@ public class GeneracionRecibosService {
             
             // 3. Generar PDF
             String rutaPDF = "recibos/Recibo-" + recibo.getNumeroRecibo() + ".pdf";
+            //Aqui si genera PDF
             return pdfAdapter.generar(recibo, conceptos, totalBase, totalConDescuento, rutaPDF);
             
         } catch (Exception e) {

@@ -95,6 +95,8 @@ public class FacadeRecibos {
         return calculadoraTotal.superaLimite(total, 10000.00); 
     }
      
+     
+    //AQUI SE GENERA EL PDF
     public boolean generarReciboCompleto(String rucCliente, List<ConceptoPago> conceptos, double totalBase, double totalConDescuento) {
         return generadorPDF.generarReciboCompleto(rucCliente, conceptos, totalBase, totalConDescuento);
     }
