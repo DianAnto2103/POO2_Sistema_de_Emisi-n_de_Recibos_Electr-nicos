@@ -5,6 +5,7 @@
 package controlador.Clientes;
 
 import javax.swing.table.DefaultTableModel;
+import model.FacadeCliente.FacadeBorrarCliente;
 import model.FacadeCliente.FacadeListadoClientes;
 import vista.ListarClientesView;
 
@@ -21,6 +22,9 @@ public final class ListaClientesController {
     //Se trae a facadeCliente
     private final FacadeListadoClientes facadeCliente;
     
+    //facade para borrar clientes
+    private final FacadeBorrarCliente facadeClienteBorrar;
+    
      //este es el constructor, donde se trae la vista y la navegación. 
     public ListaClientesController(ListarClientesView vistaCliente, NavegacionCliente navegacion){
         this.vistaListaCliente = vistaCliente;
@@ -29,6 +33,8 @@ public final class ListaClientesController {
         this.facadeCliente = new FacadeListadoClientes();
         configurarEventos(); //esto es para la configuracion de eventos como => ir a la pantalla agregar cleinte, ir a la pantalla buscar cliente. 
         cargarClientes();
+        
+        facadeClienteBorrar = new FacadeBorrarCliente();
     }
     
     public void configurarEventos(){
@@ -41,6 +47,8 @@ public final class ListaClientesController {
         
         vistaListaCliente.getRadioRUC().addActionListener(e -> buscarClientes());
         vistaListaCliente.getRadioRazonSocial().addActionListener(e -> buscarClientes());
+        
+        vistaListaCliente.getBotonEliminarCliente().addActionListener(e -> eliminarClientes());
         
     }
     
@@ -86,8 +94,36 @@ public final class ListaClientesController {
         vistaListaCliente.getTablaCliente().setModel(model);
     }
     
+    public void eliminarClientes()
+    {
+        // Obtener la fila seleccionada en la tabla de clientes
+        int filaSeleccionada = vistaListaCliente.getTablaCliente().getSelectedRow();
+            
+        // Verificar si el usuario ha seleccionado alguna fila. Si es -1 entonces NO hay ninguna fila selccionada
+        if (filaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(vistaListaCliente, "Por favor, seleccione un cliente de la lista!!", 
+            "Selección requerida", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+        }
+            
+        // Obtener el ID del cliente desde la columna 0 de la fila seleccionada. Tiene que tener el id del cliente la columna
+        int idCliente = (int) vistaListaCliente.getTablaCliente().getValueAt(filaSeleccionada, 0);
+        
+        facadeClienteBorrar.borrarCliente(idCliente);
+        
+        cargarClientes();
+          
+    }
+    
     public void cargarClientes(){
         DefaultTableModel modelo = facadeCliente.obtenerClientesParaTabla();
+
+        
+        vistaListaCliente.getTablaCliente().getColumn("ID").setMaxWidth(0);
+        vistaListaCliente.getTablaCliente().getColumn("ID").setMinWidth(0);
+        vistaListaCliente.getTablaCliente().getColumn("ID").setPreferredWidth(0);
+        
+        
         vistaListaCliente.getTablaCliente().setModel(modelo);
     }
     

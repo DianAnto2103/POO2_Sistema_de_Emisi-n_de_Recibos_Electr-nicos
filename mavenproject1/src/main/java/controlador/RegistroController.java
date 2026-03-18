@@ -4,6 +4,7 @@
  */
 package controlador;
 
+import controlador.Clientes.ClientesCoordinadorController;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
@@ -16,31 +17,37 @@ import model.ConceptoPago;
 import model.FacadeRecibos.FacadeRecibos;
 import modelo.Factory.MetodoPagoFactory;
 import modelo.Factory.MetododePago;
+import vista.AgregarClienteView;
 import vista.ReciboView;
 
 
 /**
  *
- * @author diana y Flavia
+ * @author diana
  */
-public final class RegistroController {
+public final class RegistroController{
     private final JFrame frameRegistro;
     private final ReciboView vistaRecibo;
     private final FacadeRecibos facadeRecibos;
     private final List<ConceptoPago> conceptosTemporales;
+    private final AgregarClienteView agregarClienteVista;
+    private ClientesCoordinadorController clientesCoordinadorController;
+    private JFrame frameCliente;
     
  public RegistroController(JFrame frameRegistro){
         this.frameRegistro = frameRegistro;
         this.vistaRecibo = new ReciboView();
         this.facadeRecibos = new FacadeRecibos();
-        this.conceptosTemporales = new ArrayList<>();     
+        this.conceptosTemporales = new ArrayList<>();  
+        this.agregarClienteVista = new AgregarClienteView();
         configurarEventos();
         inicializarFormulario();
         configurarStrategyInicial();
     }
     
-    public void configurarEventos(){
-        vistaRecibo.getBotonSalir().addActionListener(e -> {
+    public void configurarEventos(){ 
+        vistaRecibo.getBotonSalir().addActionListener(e -> 
+        {
             cerrarVentana();
         });
         
@@ -52,7 +59,8 @@ public final class RegistroController {
         
         vistaRecibo.getBotonGuardarPDF().addActionListener(e -> generarPDFRecibo());
         
-     
+        vistaRecibo.getBotonAgregarCliente().addActionListener(e -> mostrarAgregarCliente());
+        
         vistaRecibo.getBotonSinDescuento().addActionListener(e -> aplicarEstrategiaSinDescuento());
         
         vistaRecibo.getBotonConDescuento().addActionListener(e -> aplicarEstrategiaConDescuento());
@@ -63,12 +71,33 @@ public final class RegistroController {
         
     }
     
-     private void configurarStrategyInicial() {
+    private void configurarStrategyInicial() {
         vistaRecibo.getBotonSinDescuento().setSelected(true);
         vistaRecibo.getBotonConDescuento().setSelected(false);
         aplicarEstrategiaSinDescuento();
     }
-    
+     
+     
+    private void mostrarAgregarCliente()
+    {
+        frameCliente = new JFrame("AgregarCliente");
+        
+        this.clientesCoordinadorController = new ClientesCoordinadorController(frameCliente);
+        
+        clientesCoordinadorController.mostrarAgregarCliente();
+        
+        frameCliente.addWindowListener(new java.awt.event.WindowAdapter() 
+        {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    cargarClientesEnComboBox();
+                });
+            }
+        });
+        
+        frameCliente.setVisible(true);
+    }
 
     private void agregarConceptoPago() {
         try {
@@ -159,7 +188,8 @@ public final class RegistroController {
     
     private void autocompletarDatosCliente() {
         String nombreSeleccionado = (String) vistaRecibo.getBotonBusqueda().getSelectedItem();
-        if (nombreSeleccionado != null) {
+        if (nombreSeleccionado != null) 
+        {
             Cliente cliente = facadeRecibos.buscarClientePorNombre(nombreSeleccionado);
             if (cliente != null) {
                 vistaRecibo.setTxtCodigo(String.valueOf(cliente.getID()));
@@ -263,8 +293,7 @@ public final class RegistroController {
             boolean exito = facadeRecibos.generarReciboCompleto(rucCliente, conceptosTemporales, totalBase, totalConDescuento);
 
             if (exito) {
-                String mensaje = "Recibo guardado y PDF generado exitosamente!\n" +
-                               "Archivo: recibos/Recibo-[NUMERO].pdf\n";
+                String mensaje = "Recibo guardado y PDF generado exitosamente!";
 
                 if (totalConDescuento < totalBase) {
                     double descuento = totalBase - totalConDescuento;

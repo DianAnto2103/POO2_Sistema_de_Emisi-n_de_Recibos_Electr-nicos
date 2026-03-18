@@ -28,6 +28,7 @@ public final class ClientesCoordinadorController implements NavegacionCliente {
         this.frameClientes = frameClientes;
         inicializarControllers();
         mostrarListaClientes(); 
+        
     }
     
     
@@ -39,7 +40,7 @@ public final class ClientesCoordinadorController implements NavegacionCliente {
         
         this.controllerListaClientes = new ListaClientesController(vistaListaClientes, this); //se pasa esta misma clase como NAVEGACIÓN, porque es el que maneja todo. 
         this.controllerAgregarClientes= new AgregarClienteController(vistaAgregarClientes, this); //igual aqui
-        this.controllerModificarClientes = null;
+        this.controllerModificarClientes = null;  
     }
     
     @Override

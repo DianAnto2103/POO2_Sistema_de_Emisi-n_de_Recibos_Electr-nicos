@@ -9,12 +9,15 @@ package model.FacadeRecibos;
  * @author diana
  */
 import Repository.*;
+import java.io.File;
 import model.Adapter.InterfacePDF;
 import model.Cliente;
 import model.ConceptoPago;
 import model.Recibo;
 import java.util.List;
 import model.Adapter.PDFAdapter;
+import java.awt.Desktop;
+import java.io.IOException;
 
 public class GeneracionRecibosService {
     private final RepositorioRecibo repoRecibo;

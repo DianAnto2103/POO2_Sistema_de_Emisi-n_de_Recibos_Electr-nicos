@@ -7,11 +7,13 @@ package model.Adapter;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import java.awt.Desktop;
 import model.Recibo;
 import java.io.File;
 import model.ConceptoPago;
 import model.Cliente;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.text.SimpleDateFormat;
 
@@ -119,6 +121,8 @@ public class ServicioPDF {
             
             document.add(total);
             
+            AbrirPDFAlCrear(rutaDestino);
+            
             document.close();
             return true;
             
@@ -158,5 +162,18 @@ public class ServicioPDF {
         cell.setBorderColor(BaseColor.BLACK);
         cell.setPadding(5);
         return cell;
+    }
+    
+    private void AbrirPDFAlCrear(String ruta){
+        File file = new File(ruta);
+        
+        if(Desktop.isDesktopSupported()){
+            Desktop desktop = Desktop.getDesktop();
+            try{
+                desktop.open(file);  
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 }

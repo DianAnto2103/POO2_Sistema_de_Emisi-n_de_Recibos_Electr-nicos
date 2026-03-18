@@ -18,6 +18,7 @@ public class ConvertidorModelo {
     {
         String[] columnNames = {"ID", "RUC", "Razón Social", "Teléfono", "Mensualidad"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
         
         for (Cliente cliente : clientes) { //esto recorre cliente por cliente
             Object[] row = {

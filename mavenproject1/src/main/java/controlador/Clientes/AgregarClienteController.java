@@ -32,7 +32,6 @@ public final class AgregarClienteController {
     
     public void configurarEventos(){
         vistaAgregarCliente.getBotonVolver().addActionListener(e -> navegacion.mostrarListaClientes());
-        vistaAgregarCliente.getBotonSalir().addActionListener(e -> navegacion.cerrarVentana());
         vistaAgregarCliente.getBotonAgregar().addActionListener(e -> agregarCliente());
         vistaAgregarCliente.getBotonLimpiar().addActionListener(e -> limpiarFormulario());
     }
@@ -43,10 +42,19 @@ public final class AgregarClienteController {
             String ruc = vistaAgregarCliente.getRUC();
             String razonSocial = vistaAgregarCliente.getRazonSocial();
             String telefono = vistaAgregarCliente.getTelefono();
-            double mensualidad = Double.parseDouble(vistaAgregarCliente.getMensualidad());
+            double mensualidad = Double.parseDouble(vistaAgregarCliente.getMensualidad().trim());
+            
+            if(razonSocial.matches("\\d+")){
+                JOptionPane.showMessageDialog(vistaAgregarCliente, "La razón social no tiene el formato adecuado.");
+                return;
+            }
+            if(!telefono.matches("\\d+")){
+                JOptionPane.showMessageDialog(vistaAgregarCliente, "El teléfono debe contener solo números.");
+            }
+            
             
             boolean exito = facadeRegistro.registrarCliente(ruc, razonSocial, telefono, mensualidad);
-
+            
             if (exito) 
             {
                 JOptionPane.showMessageDialog(vistaAgregarCliente, "Cliente registrado exitosamente!!");

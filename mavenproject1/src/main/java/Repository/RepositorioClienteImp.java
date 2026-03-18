@@ -206,7 +206,7 @@ public class RepositorioClienteImp implements RepositorioCliente {
     public void eliminar(Cliente cliente)
     {
         // Consulta SQL para eliminación lógica..
-        String sql = "UPDATE clientes SET activo = 0 WHERE id = ?";
+        String sql = "DELETE FROM clientes WHERE id = ?";
         
         try(PreparedStatement stmt = connection.prepareStatement(sql))
         {
