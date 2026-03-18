@@ -9,9 +9,13 @@ package controlador.Clientes;
  * @author diana
  */
 
+import java.net.URL;
 import javax.swing.JOptionPane;
 import model.FacadeCliente.FacadeRegistroCliente;
 import vista.AgregarClienteView;
+import Service.APISunatConexion;
+import java.util.Scanner;
+import org.json.JSONObject;
 
 //este es el controlador para la vista de agregar cliente.
 public final class AgregarClienteController {
@@ -22,15 +26,21 @@ public final class AgregarClienteController {
     //se trae facade Registro
     private final FacadeRegistroCliente facadeRegistro;
     
+    private final APISunatConexion conexion;
+    
+    private String razonSocial = "no funciono";
+    
     //este es el constructor, donde se trae la vista y la navegación. 
     public AgregarClienteController(AgregarClienteView vistaAgregarCliente, NavegacionCliente navegacion) {
         this.vistaAgregarCliente = vistaAgregarCliente;
         this.navegacion = navegacion;
         this.facadeRegistro = new FacadeRegistroCliente();
+        this.conexion = new APISunatConexion(); 
         configurarEventos(); //esto es para la configuracion de eventos como => volver a pantalla mostrarCliente, cerrarVentana, etc. 
     }
     
     public void configurarEventos(){
+        vistaAgregarCliente.getBotonRuc().addActionListener(e -> autoCompletarConexion());
         vistaAgregarCliente.getBotonVolver().addActionListener(e -> navegacion.mostrarListaClientes());
         vistaAgregarCliente.getBotonAgregar().addActionListener(e -> agregarCliente());
         vistaAgregarCliente.getBotonLimpiar().addActionListener(e -> limpiarFormulario());
@@ -80,6 +90,45 @@ public final class AgregarClienteController {
                 "Error al agregar cliente: " + e.getMessage(), 
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void autoCompletarConexion()
+    {
+        String RUC = vistaAgregarCliente.getRUC();
+        if(RUC != null){
+            conexion.establecerConexion(RUC);
+            TraerDatos();
+            vistaAgregarCliente.setRazonSocial(razonSocial);
+        }  
+    }
+    
+    public void TraerDatos(){
+        try{
+            if(conexion.getCodigo() != 200){
+                JOptionPane.showMessageDialog(vistaAgregarCliente, 
+                        "No se ha obtenido los datos del RUC ingresado. Por favor, verifique el RUC."
+                );
+
+            } else{
+                StringBuilder informationString = new StringBuilder();
+                Scanner lectura = new Scanner(conexion.getURL().openStream());
+                
+                while(lectura.hasNext()){
+                    informationString.append(lectura.nextLine());
+                }
+                
+                lectura.close();
+                
+                //Traer datos (en este caso solo el RUC)
+                
+                JSONObject objectJSON = new JSONObject(informationString.toString());
+                
+                razonSocial = objectJSON.getString("razon_social");
+          
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
     

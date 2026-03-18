@@ -5,6 +5,7 @@
 package vista;
 
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 /**
  *
@@ -211,6 +212,10 @@ public class AgregarClienteView extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 
+    public JTextField getBotonRuc(){
+        return inputRUC;
+    }
+    
     public void setRUC(String ruc) 
     {
         this.inputRUC.setText(ruc);
