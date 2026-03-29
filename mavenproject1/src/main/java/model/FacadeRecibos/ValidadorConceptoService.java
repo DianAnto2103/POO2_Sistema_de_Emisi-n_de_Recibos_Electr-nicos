@@ -14,7 +14,6 @@ import model.ConceptoPago;
 public class ValidadorConceptoService {
     public boolean validarConcepto(ConceptoPago concepto) {
         return concepto.getDescripcion().length() >= 5 && 
-               concepto.getMonto() > 0 &&
-               !concepto.getFecha().after(new Date());
+               concepto.getMonto() > 0;
     }
 }

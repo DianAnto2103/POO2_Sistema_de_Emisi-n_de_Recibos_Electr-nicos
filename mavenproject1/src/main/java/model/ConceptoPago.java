@@ -4,7 +4,7 @@
  */
 package model;
 
-import java.sql.Date;
+
 import modelo.Factory.MetodoPagoFactory;
 import modelo.Factory.MetododePago;
 
@@ -16,7 +16,7 @@ public class ConceptoPago {
     private int codigo;
     private String descripcion;
     private MetododePago metodoPago;
-    private Date fecha;
+    private String fecha;
     private double monto;
     private int reciboID;
     private String tipoEstrategia;
@@ -65,11 +65,11 @@ public class ConceptoPago {
         this.metodoPago = metodoPago;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

@@ -34,6 +34,8 @@ public class ServicioPDF {
             PdfWriter.getInstance(document, new FileOutputStream(rutaDestino));
             document.open();
             
+            
+            
             // Título
             Font tituloFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
             Paragraph titulo = new Paragraph("RECIBO DE PAGO", tituloFont);
@@ -77,18 +79,20 @@ public class ServicioPDF {
             conceptosTitulo.setSpacingAfter(10);
             document.add(conceptosTitulo);
             
-            PdfPTable tablaConceptos = new PdfPTable(new float[]{3, 2, 1});
+            PdfPTable tablaConceptos = new PdfPTable(new float[]{4, 3 , 2, 1});
             tablaConceptos.setWidthPercentage(100);
             
             // Encabezados de tabla
             tablaConceptos.addCell(crearCeldaHeader("DESCRIPCIÓN"));
             tablaConceptos.addCell(crearCeldaHeader("MÉTODO DE PAGO"));
+            tablaConceptos.addCell(crearCeldaHeader("MES"));
             tablaConceptos.addCell(crearCeldaHeader("MONTO"));
             
             // Filas de conceptos
             for (ConceptoPago concepto : conceptos) {
                 tablaConceptos.addCell(crearCelda(concepto.getDescripcion(), normalFont));
                 tablaConceptos.addCell(crearCelda(concepto.getMetodoPago().getNombre(), normalFont));
+                tablaConceptos.addCell(crearCelda(concepto.getFecha(), normalFont));
                 tablaConceptos.addCell(crearCelda("S/ " + String.format("%.2f", concepto.getMonto()), normalFont));
             }
             

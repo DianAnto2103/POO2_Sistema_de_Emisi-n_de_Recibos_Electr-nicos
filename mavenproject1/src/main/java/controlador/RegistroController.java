@@ -106,7 +106,7 @@ public final class RegistroController{
             String descripcion = vistaRecibo.getTxtDescripcion().getText();
             String tipoMetodo = (String) vistaRecibo.getComboMetodoPago().getSelectedItem();
             double montoBase = Double.parseDouble(vistaRecibo.getTxtMonto().getText());
-            Date fecha = vistaRecibo.getDate().getDate();
+            String fecha = vistaRecibo.getComboMesDePago().getSelectedItem().toString();
             
            
             if (descripcion.isEmpty() || tipoMetodo == null || fecha == null) {
@@ -137,8 +137,8 @@ public final class RegistroController{
             ConceptoPago concepto = new ConceptoPago();
             concepto.setDescripcion(descripcion);
             concepto.setMetodoPago(tipoMetodo);
-            concepto.setFecha(new java.sql.Date(fecha.getTime()));
             concepto.setMonto(montoBase);
+            concepto.setFecha(fecha);
             
             
             conceptosTemporales.add(concepto);
@@ -266,7 +266,7 @@ public final class RegistroController{
         vistaRecibo.getTxtDescripcion().setText("");
         vistaRecibo.getTxtMonto().setText("");
         vistaRecibo.getComboMetodoPago().setSelectedIndex(0);
-        vistaRecibo.getDate().setDate(new Date()); // Fecha actual
+        vistaRecibo.getComboMesDePago().setSelectedIndex(0);
     }
     
     private void generarPDFRecibo() {
