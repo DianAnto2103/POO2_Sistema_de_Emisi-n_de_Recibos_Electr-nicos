@@ -15,18 +15,18 @@ public class GeneradorNumeracionService {
         int siguienteNumero = calcularSiguienteNumero(ultimoNumeroDeLaBD);
         
         // 2. Formatear con ceros "001"
-        return "R-" + String.format("%03d", siguienteNumero);
+        return "R001" + String.format("%08d", siguienteNumero);
     }
     
     private int calcularSiguienteNumero(String ultimoNumero) {
         // Si no hay recibos, empezar desde 1
-        if (ultimoNumero == null || ultimoNumero.equals("R-000")) {
+        if (ultimoNumero == null || ultimoNumero.equals("R001-00000000")) {
             return 1;
         }
         
         try {
             // Extraer número del formato "R-001"
-            String numeroStr = ultimoNumero.replace("R-", "");
+            String numeroStr = ultimoNumero.replace("R001-", "");
             int ultimoNum = Integer.parseInt(numeroStr);
             
             return ultimoNum + 1;

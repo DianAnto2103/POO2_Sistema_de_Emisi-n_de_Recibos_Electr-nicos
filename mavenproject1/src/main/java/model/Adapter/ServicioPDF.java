@@ -15,7 +15,6 @@ import model.Cliente;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.text.SimpleDateFormat;
 
 /**
  *
@@ -34,27 +33,26 @@ public class ServicioPDF {
             PdfWriter.getInstance(document, new FileOutputStream(rutaDestino));
             document.open();
             
+            //Logo 
+            String imgSrc = "C:\\Proyecto Final\\POO2_Sistema_de_Emisi-n_de_Recibos_Electr-nicos\\mavenproject1\\src\\main\\java\\imagenes\\logooasis.png";
+            Image image = Image.getInstance(imgSrc);
+            image.setAlignment(Element.ALIGN_LEFT);
+            image.scaleToFit(350.5f, 76.1f);
+            image.setSpacingAfter(20);
+            document.add(image);
             
-            
-            // Título
-            Font tituloFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
-            Paragraph titulo = new Paragraph("RECIBO DE PAGO", tituloFont);
-            titulo.setAlignment(Element.ALIGN_CENTER);
-            titulo.setSpacingAfter(20);
-            document.add(titulo);
             
             // Información del recibo
             Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 10);
             Font boldFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10);
             
             // Datos del recibo
-            PdfPTable infoTable = new PdfPTable(2);
-            infoTable.setWidthPercentage(100);
+            PdfPTable infoTable = new PdfPTable(1);
+            infoTable.setWidthPercentage(35);
             
-            infoTable.addCell(crearCelda("Número de Recibo:", boldFont));
-            infoTable.addCell(crearCelda(recibo.getNumeroRecibo(), normalFont));
-            infoTable.addCell(crearCelda("Fecha de Emisión:", boldFont));
-            infoTable.addCell(crearCelda(new SimpleDateFormat("dd/MM/yyyy").format(recibo.getFechaEmision()), normalFont));
+            
+            infoTable.addCell(crearCelda("RUC " + recibo.getCliente().getRUC() + "\n" + 
+                    "RECIBO DE PAGOS" + "\n" + recibo.getID(), normalFont));
             
             document.add(infoTable);
             document.add(Chunk.NEWLINE);
@@ -62,8 +60,8 @@ public class ServicioPDF {
             // Datos del cliente
             Cliente cliente = recibo.getCliente();
             Paragraph clienteInfo = new Paragraph();
-            clienteInfo.add(new Chunk("Cliente: ", boldFont));
-            clienteInfo.add(new Chunk(cliente.getRazonSocial(), normalFont));
+            clienteInfo.add(new Chunk("Cliente:", boldFont));
+            clienteInfo.add(new Chunk(cliente.getRazonSocial().toUpperCase(), normalFont));
             clienteInfo.add(Chunk.NEWLINE);
             clienteInfo.add(new Chunk("RUC: ", boldFont));
             clienteInfo.add(new Chunk(cliente.getRUC(), normalFont));
@@ -90,7 +88,7 @@ public class ServicioPDF {
             
             // Filas de conceptos
             for (ConceptoPago concepto : conceptos) {
-                tablaConceptos.addCell(crearCelda(concepto.getDescripcion(), normalFont));
+                tablaConceptos.addCell(crearCelda(concepto.getDescripcion().toUpperCase(), normalFont));
                 tablaConceptos.addCell(crearCelda(concepto.getMetodoPago().getNombre(), normalFont));
                 tablaConceptos.addCell(crearCelda(concepto.getFecha(), normalFont));
                 tablaConceptos.addCell(crearCelda("S/ " + String.format("%.2f", concepto.getMonto()), normalFont));
